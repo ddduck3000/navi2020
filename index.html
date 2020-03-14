@@ -1,0 +1,1871 @@
+<!DOCTYPE html>
+<html lang="zh-CN" id="moulemHtml">
+    <head>
+        <meta charset="UTF-8">
+        <title>迪迪鸭网络导航</title>
+        <meta name="keywords" content="简约个人导航网站" />
+        <meta name="description" content="简约个人导航网站" />
+        
+		<link rel="stylesheet" type="text/css" href="static/css/zui.min.css" />
+        <link rel="stylesheet" type="text/css" href="static/css/font_716225_9byylqtxsca.css">
+        <link rel="stylesheet" type="text/css" href="static/css/jquery-ui.css"/>
+        <link type="text/css" rel='stylesheet' href="static/css/moulem.css">
+        <!-- <link rel="stylesheet" type="text/css" href="static/css/mso.css"> -->
+        <script src='static/js/jquery.js' type='text/javascript'></script>
+        <script type="text/javascript" src="static/js/keyword.js"></script>
+        <script type="text/javascript" src="static/js/moulem.js"></script>
+        <link rel="icon" href="/img/favicon.ico" type="image/x-icon">
+        <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
+
+        <script src="static/js/vue.min.js"></script>
+        <script src="static/js/zui.min.js"></script>
+        <script src="static/js/jquery-ui.min.js"></script>
+		<link href="static/css/css.css" rel="stylesheet" type="text/css" />
+        <!--手机端跳转-->
+        <script type="text/javascript">
+            var mobileAgent = new Array("iphone", "ipod", "ipad", "android", "mobile", "blackberry", "webos", "incognito", "webmate", "bada", "nokia", "lg", "ucweb", "skyfire");
+            var browser = navigator.userAgent.toLowerCase();
+            var isMobile = false;
+            for (var i=0; i<mobileAgent.length; i++){ if (browser.indexOf(mobileAgent[i])!=-1){ isMobile = true;
+//alert(mobileAgent[i]);
+                location.href = 'http://m.moulem.com/';
+                break; } }
+        </script>
+		
+
+	<script language="JavaScript" type="text/javascript">            
+		function search4(){            
+			if(form1.abc0.checked)            
+				window.open("http://www.xdowns.com/tag.asp?act=topic&f=index&keyword="+form1.key.value,"mspg0");            
+			if(form1.abc1.checked)            
+				window.open("http://www.google.cn/search?hl=zh-CN&source=hp&q="+form1.key.value,"mspg3");          
+			if(form1.abc3.checked)            
+				window.open("http://www.google.cn/search?hl=zh-CN&source=hp&q="+form1.key.value,"mspg3");            
+			if(form1.abc6.checked)            
+				window.open("http://www.baidu.com/baidu?tn=qiandunet&word="+form1.key.value,"mspg7");            
+			if(form1.abc7.checked)            
+				window.open("http://mp3search.baidu.com/wstsearch?tn=baidump3&ct=134217728&lm=-1&rn=&word="+form1.key.value,"mspg8");            
+			if(form1.abc8.checked)            
+				window.open("http://www.baidu.com/m?rn=10&tn=baidump3lyric&ct=150994944&lm=-1&word="+form1.key.value,"mspg9");            
+			if(form1.abc9.checked)            
+				window.open("http://image.baidu.com/i?tn=baiduimage&ct=201326592&lm=-1&cl=2&word="+form1.key.value,"mspg10");            
+			return false;            
+		} 
+		
+    function switchTab(ProTag, ProBox) 
+    {
+      for (i = 1; i < 9; i++) 
+      {
+        if ("tab" + i == ProTag)
+        	{ document.getElementById(ProTag).getElementsByTagName("a")[0].className = "on"; } 
+        else 
+        	{ document.getElementById("tab" + i).getElementsByTagName("a")[0].className = "";}
+        if ("con" + i == ProBox) 
+        	{document.getElementById(ProBox).style.display = "";} 
+        else 
+        	{ document.getElementById("con" + i).style.display = "none";}
+      }
+    }				
+	</script>
+
+    </head>
+<body id="moulemBody">
+
+
+<!--     <div id="msoBigBox">
+        <div id="msoLogo"></div>
+        <div id="msoInputBox">
+            <ul id="msoChangeBox">
+
+            </ul>
+            <div id="msoType"></div>
+            <form action="" method="GET" target="_blank" id='msoSearchCheck'>
+                <input id="msoInput" type="text" name="" class="msoInputClass" autocomplete="off" lang="zh-CN">
+            </form>
+            <div class="msoKeyWord"></div>
+        </div>
+
+        <ul id="msoBtnBox">
+
+        </ul>
+        <img id="msoLock" title="锁定/解锁快搜条">     
+    </div> 
+    <div id="msoBigBoxLine0"></div>
+    <div id="msoBigBoxLine1"></div>
+    <div id="moulemSearchBox">
+        <iframe id="moulemSearch" src="" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true"></iframe>
+    </div>-->
+
+
+
+<script>
+    var $CONF = {};
+    $CONF['is_guest'] = '1';
+    $CONF['base_url'] = '';
+    $CONF['site_url'] = '/';
+    $CONF['img_base_url'] = "//uploads.moulem.com";
+    $CONF['path_info'] = "";
+    $CONF['user_id'] = '';
+</script>
+
+<script>
+    $.ajaxSetup({dataType:"json", type:"post"});
+    $('[data-toggle="tooltip"]').tooltip();
+
+    function showSuccess(content){
+        var myMessager = new $.zui.Messager({placement:'top',type: 'success',icon:'ok-sign'});
+        myMessager.show(content);
+    }
+    function showError(content){
+        var myMessager = new $.zui.Messager({placement:'top',type: 'danger',icon:'warning-sign'});
+        myMessager.show(content);
+    }
+</script>
+
+<div class="w" id="w">
+    
+<script>
+    var is_guest = 1</script>
+
+
+
+
+
+
+<div id="main">
+    <div id='bigBox'>
+        <div id='logoBox'>
+            <div id='logoLeft' title=""><div id='logoFixed'></div><div id="logoLeftFe"></div></div>
+       
+        </div>
+        <!--某柠檬_柠檬味的导航搜索框-->
+        <!--start search-->
+        <div id="search_bg">
+            <div id="button_bg">
+                <div class="searchChoice"><img src="static/picture/scbaidu.png" class="sChoiceBtn" title="切换搜索引擎">
+                   <div class="scBigBox">
+                        <div class="scSmallBox">
+                            <img class="scImg" src="static/picture/scbaidu.png">
+                            <span class="scName">百度</span>
+                        </div>
+                       
+                        <div class="scSmallBox">
+                            <img class="scImg" src="static/picture/scgoogle.png">
+                            <span class="scName">Google</span>
+                        </div>
+
+
+                    </div>
+                </div>
+                <form action="" method="GET" target="_blank" id='searchCheck'>
+                    <input type="text" value="" x-webkit-speech="" lang="zh-CN" placeholder="" name="https://www.baidu.com/s?wd=" id='search' class="textb" autocomplete="off">
+                    <input type="submit" value=" " class="subb" id='searchBtn'>
+                </form>
+                <div class="promptBtn"></div>
+                <div class="promptText"><b>找点乐子？</b><br>不输入关键词点击搜<br>索图标或按回车键</div>
+                <div class="keyword"></div>
+            </div>
+        </div>
+
+			<!-- 搜索框下的导航-->			
+  			<div id="line">
+  				<ul>
+  					<li id="tab1"><a href="#" onclick="switchTab('tab1','con1');this.blur();return false;">常用</a></li>
+  					<li id="tab2"><a href="#" onclick="switchTab('tab2','con2');this.blur();return false;">工作</a></li>
+  					<li id="tab3"><a href="#" onclick="switchTab('tab3','con3');this.blur();return false;">数码</a></li>
+  					<li id="tab4"><a href="#" onclick="switchTab('tab4','con4');this.blur();return false;">购物</a></li>
+					<li id="tab5"><a href="#" onclick="switchTab('tab5','con5');this.blur();return false;">影音</a></li>
+					<li id="tab6"><a href="#" onclick="switchTab('tab6','con6');this.blur();return false;">教育</a></li>
+					<li id="tab7"><a href="#" onclick="switchTab('tab7','con7');this.blur();return false;">生活</a></li>
+  					<li id="tab8"><a href="#" onclick="switchTab('tab8','con8');this.blur();return false;">备用</a></li>
+  				</ul>
+  			</div>
+			 <!-- 搜索框下的导航结束-->		
+			 
+  		<div id="contentnavi">			
+				<div id="con1">
+				<!-- con1-1 开始--> 
+				
+					<div id="contentleft">
+				
+					<div id="linkstyle">办公&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a href="http://www.sdas.org/" target="_blank">科学院</a>
+						<a href="http://www.sdxcl.com/" target="_blank">材料所</a>
+						<a href="http://www.126.com" target="_blank">126</a>
+					    <a href="http://www.qlu.edu.cn/" target="_blank">齐鲁工大</a>
+						<a href="http://mail.qlu.edu.cn/" target="_blank">工大邮箱</a>
+					    <a href="http://oa.qlu.edu.cn/login/Login.jsp?logintype=1" target="_blank">工大OA</a>
+					    <a href="http://210.44.144.30:8020/GXCWYTH/" target="_blank">工大财务</a>
+						<a href="http://210.44.144.42/login.html" target="_blank">导师</a>
+					</div>		
+					
+					<div id="linkstyle">招生&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a href="http://www.sdca.edu.cn/" target="_blank">山艺</a>	
+     					<a href="http://zsbgs.sdca.edu.cn/" target="_blank">招生办</a>	
+						<a href="http://edu.shandong.gov.cn/" target="_blank">教育厅</a>
+					    <a href="http://www.sdzk.cn/" target="_blank">招考院</a>
+
+					</div>	
+					
+				    <div id="linkstyle">课题&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a href="http://kjt.shandong.gov.cn/" target="_blank">科技厅</a>
+						<a href="http://cloud.sdstc.gov.cn/uc/login/login.htm" target="_blank">云平台</a>
+						<a href="http://edu.shandong.gov.cn/" target="_blank">教育厅</a>
+						<a href="http://221.214.56.13:8089/" target="_blank">高校平台</a>
+						<a href="http://www.jnsti.gov.cn/" target="_blank">科技局</a>
+					    <a href="http://192.168.2.13:8081/login.do" target="_blank">院办公</a>
+						<a href="http://218.57.145.26/servlet/scsc" target="_blank">科研站</a>
+
+                        <a href="http://192.168.2.8:8080/" target="_blank">财务</a>	
+					</div>					
+					
+				    <div id="linkstyle">
+	                    检索&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+						<a href="http://nav.hiqq.com.cn/twy/" target="_blank">HiQQ</a>
+						<a href="http://www.google.com" target="_blank">Google</a>
+						<a href="https://scholar.google.com/?hl=zh-CN" target="_blank">学术</a>
+						<a href="http://ac.scmor.com/" target="_blank">学术镜像</a>
+					    <a href="https://xue.glgoo.org/" target="_blank">glgoo</a>
+					    <a href="http://googlebridge.com/" target="_blank">小桥</a>
+					</div>					
+
+				    <div id="linkstyle">
+	                    学术&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a href="https://www.cnki.net/" target="_blank">知网</a>
+						<a href="https://scholar.google.com/?hl=zh-CN" target="_blank">学术</a>
+						<a href="http://sci-hub.tw/" target="_blank">SCI-hub</a>
+					    <a href="https://lunwen.im/" target="_blank">喵咪</a>
+						<a href="https://app.dimensions.ai/discover/publication" target="_blank">dimensions</a>
+						<a href="http://apps.webofknowledge.com/WOS_GeneralSearch_input.do?product=WOS&search_mode=GeneralSearch&SID=E2EXryBM4X1JaPveLld&preferencesSaved=" target="_blank">WOS</a>
+						<a href="http://www.oalib.com/" target="_blank">oalib</a>
+						<a href="http://wenku.baidu.com/" target="_blank">百度文库</a>
+					</div>					
+					
+			
+
+
+			
+				
+					
+					</div>
+					<!--contentleft结束-->
+					
+										
+					
+				<!--con1-2开始--> 
+				<div id="contentleft">	
+
+				    <div id="linkstyle">新闻&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a href="http://www.baidu.com/" target="_blank">百度</a>
+						<a href="http://www.ifeng.com/" target="_blank">凤凰网</a>
+	          	        <a href="http://www.qq.com/" target="_blank">腾讯</a>
+						<a href="http://www.sina.com.cn" target="_blank">新浪</a>
+						<a href="http://www.sohu.com/" target="_blank">搜狐</a>
+        			    <a href="http://sports.sina.com.cn" target="_blank">新浪体育</a>
+					    <a href="https://www.xuexi.cn/" target="_blank">强国</a>				
+				    </div>	
+					
+					<div id="linkstyle">
+	                    二手&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a href="http://www.sd001.com/forum.php?mod=forumdisplay&fid=251&filter=author&orderby=dateline" target="_blank">熊坛</a>
+						<a href="http://www.jd-bbs.com/forum.php?mod=forumdisplay&fid=97&filter=author&orderby=dateline" target="_blank">家电</a>
+
+						<a href="http://itbbs.pconline.com.cn/es/type_g663eg793ag5668-45.html" target="_blank">太平洋</a>
+						<a href="http://we.poppur.com/forum-298-1.html" target="_blank">PCinlife二手</a>
+						<a href="http://my.poppur.com/home.php?mod=space&uid=513644&do=thread&view=me&from=space" target="_blank">一传手</a>
+						<a href="http://s.2.taobao.com/list/list.htm?start=380&end=550&cpp=true&st_edtime=1&ist=1&catid=50100426&q=" target="_blank">显示器</a>
+						<a href="http://www.chiphell.com/forum-26-1.html" target="_blank">chiphell</a>
+
+						<a href="http://tieba.baidu.com/f?kw=%E5%9B%BE%E6%8B%89%E4%B8%81&ie=utf-8" target="_blank">图吧</a>
+					</div>					
+
+					<div id="linkstyle">
+	                    商城&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a href="http://www.taobao.com/" target="_blank">淘宝</a>
+						<a href="http://www.tmall.com/" target="_blank">天猫</a>
+						<a href="http://www.jd.com/" target="_blank">京东</a>
+						<a href="http://www.suning.com/" target="_blank">苏宁</a>	
+						<a href="http://www.amazon.cn/" target="_blank">亚马逊</a>		
+						<a href="http://www.newegg.com.cn/" target="_blank">新蛋</a>	
+						<a href="http://www.dangdang.com/" target="_blank">当当</a>
+						<a href="http://www.yihaodian.com" target="_blank">一号店</a>
+						<a href="http://www.toolmall.com/" target="_blank">土猫</a>
+						<a href="http://www.yoger.com.cn/" target="_blank">优个网</a>
+
+
+
+					</div>					
+
+					
+					<div id="linkstyle">
+	                    荐购&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						
+						<a href="http://www.smzdm.com/" target="_blank">什么值</a>
+						<a href="http://fx.smzdm.com/" target="_blank">发现</a>
+						<a href="http://cu.manmanbuy.com/" target="_blank">慢慢买</a>	
+						<a href="http://www.meidebi.com/" target="_blank">没得比</a>
+						<a href="http://www.zuanke8.com/forum-15-1.html" target="_blank">赚客</a>	
+						<a href="https://www.uszcn.com/" target="_blank">转运中国</a>	
+						<a href="http://www.haidaibao.com/" target="_blank">海带宝</a>	
+						<a href="http://tieba.baidu.com/f?kw=%E9%85%B1%E9%A6%99%E7%99%BD%E9%85%92" target="_blank">酱吧</a>
+						</div>	
+						
+
+					
+					<div id="linkstyle">
+						股票&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a href="http://live.new-rand.cn/128/" target="_blank">财赋</a>
+						<a href="http://blog.sina.com.cn/u/1283472050" target="_blank">财赋博客</a>
+						<a href="http://stock.eastmoney.com/" target="_blank">东方</a>&nbsp;
+						<a href="http://guba.eastmoney.com/" target="_blank">股吧</a>&nbsp;
+						<a href="http://finance.ifeng.com/stock/" target="_blank">凤凰</a>
+						<a href="http://www.55188.com/forumdisplay.php?fid=8&filter=0&orderby=dateline&ascdesc=DESC" target="_blank">理想论坛</a>
+						<a href="http://bbs.macd.cn/forumdisplay.php?fid=25&filter=0&orderby=dateline&ascdesc=DESC" target="_blank">MACD</a>
+
+
+					</div>
+					
+					
+				</div><!--contentleft结束-->
+				
+				<!--con1-3开始--> 
+				<div id="contentleft">	
+					
+					<div id="linkstyle">
+						电影&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						
+
+						<a href="http://www.wuhaozhan.net/movie/list/" target="_blank">5号</a>
+						<a href="http://www.80s.tw/" target="_blank">80s</a>
+
+						<a href="https://www.66s.cc/" target="_blank">新6v</a>
+
+						<a href="http://n7f6.cn/" target="_blank">n7f6</a>
+						<a href="https://www.12bt.com/" target="_blank">12bt</a>
+						<a href="http://www.6vhao.tv/" target="_blank">6vhao</a>
+						<a href="https://www.dandanzan.com/" target="_blank">ddzan</a>
+						<a href="http://www.dygang.net/" target="_blank">电影港</a>
+						<a href="https://weibo.com/baiduSUB?from=profile&wvr=6" target="_blank">摆渡</a>
+
+						<a href="https://www.bd-film.cc/" target="_blank">BD</a>
+						<a href="https://www.ygdy8.com/" target="_blank">阳光</a>
+   
+					</div>
+
+					<div id="linkstyle">
+						电玩&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a href="https://www.91wii.com/forum-125-1.html" target="_blank">91wii</a>
+						<a href="https://tieba.baidu.com/f?kw=switch%C6%C6%BD%E2&fr=ala0&tpl=5" target="_blank">破解吧</a>
+						<a href="http://bbs.duowan.com/forum-2748-1.html" target="_blank">多玩</a>
+						<a href="http://loveps4.com/" target="_blank">爱ps4</a>
+						<a href="https://madloader.com/nintendo-switch/switch-eshop-nsp/" target="_blank">madloader</a>
+						<a href="https://1fichier.com/dir/08K944dE" target="_blank">1fichier</a>
+						<a href="https://1fichier.com/dir/lnMt5OGF" target="_blank">2</a>
+						<a href="http://www.eshop-switch.com/game.html" target="_blank">掌中宝</a>
+					</div>
+					
+					<div id="linkstyle">
+	                    生活&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a href="http://movie.douban.com/" target="_blank">豆瓣</a>
+						<a href="http://123.233.117.50:801/jnwt/" target="_blank">公积金</a>	
+						<a href="https://club.autohome.com.cn/bbs/forum-c-771-1.html#pvareaid=6826792" target="_blank">汉兰达</a>
+						<a href="http://www.xcar.com.cn/bbs/forumdisplay.php?fid=478" target="_blank">爱卡汽车</a>
+						<a href="http://www.jnmama.com/forum.php" target="_blank">妈网</a>
+
+
+					
+					</div>					
+					
+				
+					
+					<div id="linkstyle">
+	                    外网&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a href="https://www.youtube.com/" target="_blank">youtube</a>
+						<a href="https://twitter.com/home" target="_blank">twitter</a>
+						<a href="https://www.facebook.com/" target="_blank">facebook</a>
+						<a href="https://github.com/ddduck3000/navi" target="_blank">github</a>
+						<a href="www.miwifi.com" target="_blank">小米路由</a>
+
+						<a href="https://cloud.google.com/" target="_blank">gcp</a>
+					</div>
+
+					
+				</div><!--contentleft结束-->
+
+				<!--con1-4开始--> 
+				<div id="contentleft">	
+					
+					
+					<div id="linkstyle">
+	                    建站&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a target="_blank" href="http://sdww.zuq.cn">山东万网</a>
+						<a href="http://www.west263.com/" target="_blank">西数</a>
+
+						<a href="https://www.sudu.cn/" target="_blank">华夏</a>
+
+						<a href="http://www.godaddy.com" target="_blank">godaddy</a>
+						<a href="https://www.namesilo.com" target="_blank">namesilo</a>
+						<a href="https://www.dnspod.cn/" target="_blank">dnspod</a>
+
+						<a href="http://www.sdclxkq.org/" target="_blank">山东材料</a>
+						
+					</div>					
+
+					
+				
+					<div id="linkstyle">
+	                    设计&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a href="http://www.zcool.com.cn/" target="_blank">站酷</a>
+						<a href="http://www.lanrentuku.com/vector/background/" target="_blank">懒人</a>
+						<a href="http://www.58pic.com/" target="_blank">千图</a>
+						<a href="http://www.ooopic.com/" target="_blank">我图</a>
+						<a href="http://888pic.com/" target="_blank">包图</a>
+						<a href="http://www.cssmoban.com/" target="_blank">模板之家</a>
+						<a href="http://hao.shejidaren.com/index.html" target="_blank">设计导航</a>
+						<a href="http://jinan.baixing.com/" target="_blank">百姓</a>
+						<a href="http://www.sf-express.com/cn/sc/" target="_blank">顺丰</a>
+						
+					</div>
+				
+					
+					<div id="linkstyle">
+	                    数码&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				
+						<a href="http://forum.anywlan.com/" target="_blank">anywlan</a>
+						<a href="http://www.right.com.cn/" target="_blank">恩山</a>
+
+					</div>
+
+					
+					<div id="linkstyle">
+	                    小学&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a target="_blank" href="http://blog.sina.com.cn/ddduck3000">作业</a>
+
+						<a target="_blank" href="http://jinan.safetree.com.cn/SafeSchool/TeacherCourse.aspx">安全教育</a>
+						<a target="_blank" href="https://www.2-class.com/">第2课堂</a>
+						<a target="_blank" href="http://rrt.jndjg.cn/">人人通</a>
+						<a target="_blank" href="http://lixia.jndjg.cn/">历下人人通</a>
+						
+
+
+						
+					</div>		
+					
+				</div><!--contentleft结束-->				
+
+				</div><!--con1结束-->
+        
+        <div id="con2" style="display: none">
+				<!--con2-1开始--> 
+				
+				
+				<div id="contentleft">	
+				
+					<div id="linkstyle">
+	                    国家基金&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a target="_blank" href="http://www.nsfc.gov.cn">基金委</a>
+						<a href="https://isisn.nsfc.gov.cn/egrantweb/" target="_blank">申报系统</a>
+						<a href="http://npd.nsfc.gov.cn/" target="_blank">共享服务</a>
+						<a href="http://nsfc.biomart.cn/" target="_blank">丁香园</a>
+
+
+						
+					</div>					
+			        	
+					<div id="linkstyle">
+	                    省市课题&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+						<a href="http://kjt.shandong.gov.cn/" target="_blank">省科技厅</a>
+						<a href="http://www.sdnsf.gov.cn/" target="_blank">省基金委</a>
+						<a href="http://cloud.sdstc.gov.cn/uc/login/login.htm" target="_blank">省云平台</a>
+						<a href="http://221.214.56.13:8089/" target="_blank">高校平台</a>
+						<a href="http://221.214.94.50:81/nsf/young/index.htm" target="_blank">市云平台</a>
+						<a href="http://www.jnsti.gov.cn/" target="_blank">市科技局</a>
+						<a href="http://www.jnsti.net/" target="_blank">市信息所</a>
+						<a href="http://119.164.252.194/a/login" target="_blank">市云平台</a>
+						<a href="http://edu.shandong.gov.cn/" target="_blank">教育厅</a>
+						
+
+						
+					</div>					
+			        	
+				
+					<div id="linkstyle">
+	                    杂志投稿&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a target="_blank" href="http://www.letpub.com.cn/index.php?page=journalapp">影响因子</a>
+						<a target="_blank" href="http://www.ccg.ustc.edu.cn/">CCCG-16</a>
+						<a target="_blank" href="http://onlinelibrary.wiley.com/journal/10.1002/(ISSN)1521-4079">CRT</a>
+						<a href="http://123.233.119.36/iras51/rewriter/WILEY/http/nmkhmdkhaq-qx9vhkdx9bnl/journal/10.1002/(ISSN)1521-4079" target="_blank">CRT山大</a>
+						<a target="_blank" href="http://www.editorialmanager.com/mri/">MRI</a>
+
+						
+					</div>					
+			        	
+					
+					<div id="linkstyle">
+	                    科研论坛&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a href="http://muchong.com/bbs/index.php" target="_blank">小木虫</a>
+						<a href="http://bbs.elecfans.com/zhuti_labview_1.html" target="_blank">labview</a>
+						<a href="https://www.draw.io/" target="_blank">绘图</a>
+
+
+					</div>					
+					
+					
+					<div id="linkstyle">
+	                    NTT公司&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+						<a href="https://www.ntt-review.jp/" target="_blank">NTT</a>	
+						<a href="http://china.nikkeibp.com.cn/" target="_blank">日经</a>			
+						<a href="http://www.ntt.co.jp/index_e.html" target="_blank">NTT</a>
+						<a target="_blank" href="http://www.ntt-at.com/">NTT-AT</a>
+						<a target="_blank" href="http://www.brl.ntt.co.jp/e/">BRL</a>
+						<a target="_blank" href="http://www.phlab.ecl.ntt.co.jp/eng/">PHlab</a>
+						<a target="_blank" href="http://www.ntt.co.jp/sclab/index_e.html">SClab</a>
+
+
+					</div>					
+					
+					
+					<div id="linkstyle">
+	                    产品宣传&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a href="http://www.nowec.com/" target="_blank">全球经贸网</a>
+						<a href="http://www.51sole.com" target="_blank">搜了网</a>
+
+
+					</div>					
+					
+					
+				
+					<div id="linkstyle">
+	                    文献检索&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a href="http://scholar.google.com/" target="_blank">google学术</a>
+						<a href="http://123.233.119.36/" target="_blank">山大校外</a>
+						<a href="http://lib.bjut.edu.cn/shujuku.html " target="_blank">北工大</a>
+						<a href="https://www.researchgate.net" target="_blank">ResearchGate</a>
+									<a href="https://www.howsci.com/" target="_blank">科研动力</a>
+						<a href="http://www.scholarnet.cn/publication/" target="_blank">学术网</a>
+
+						<a href="http://ishare.iask.sina.com.cn/" target="_blank">iask</a>
+						<a href="http://www.soudoc.com/bbs/" target="_blank">零点</a>
+						<a href="http://bbs.myboyan.com/" target="_blank">博研</a>
+
+					</div>
+					
+					
+
+					
+					
+				</div><!--contentleft结束-->
+				
+<div id="contentleft">	
+				
+				
+					
+					<div id="linkstyle">
+	                    电子书籍&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a href="http://bookzz.org/" target="_blank">bookZZ</a>
+						<a href="http://en.booksee.org/" target="_blank">booksee</a>
+						<a href="http://booksc.org/" target="_blank">booksc</a>
+						<a href="http://gen.lib.rus.ec/" target="_blank">libgen</a>
+						<a href="http://www.sci-hub.io/" target="_blank">SciHub</a>
+
+
+					</div>
+					
+					
+					<div id="linkstyle">
+	                    收录分区&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+						<a href="http://123.233.119.36/iras51/rewriter/ISI/" target="_blank">SCI检索</a>
+						<a href="http://123.233.119.36/iras51/rewriter/EI/" target="_blank">EI检索</a>
+
+						<a href="http://www.medsci.cn/sci/?action=search" target="_blank">影响因子</a>
+					</div>
+										
+					<div id="linkstyle">
+	                    材料采购&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a href="http://www.tianyancha.com/" target="_blank">天眼查</a>
+						<a href="http://www.qichacha.com/" target="_blank">企查查</a>
+						<a href="http://www.reagent.com.cn:666/ScrcBackGroup/reagent/newindex.jsp" target="_blank">国药集团</a>
+						<a href="http://portal.sdzfcg.gov.cn/" target="_blank">政采超市</a>
+						
+
+
+					</div>					
+					
+					
+					<div id="linkstyle">
+	                    在线翻译&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a href="http://dict.cnki.net/dict.aspx" target="_blank">CNKI</a>
+						<a href="http://www3.zzu.edu.cn/zzjdict/" target="_blank">郑州大学</a>
+						<a href="http://edu.dict.cn/" target="_blank">海词</a>
+						<a href="http://www.iciba.com/" target="_blank">爱词霸</a>
+						<a href="http://www.nciku.com/" target="_blank">词酷</a>
+					</div>
+					
+					
+										<div id="linkstyle">
+	                    在线工具&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a href="https://apps.automeris.io/wpd/index.zh_CN.html" target="_blank">WebPlotDigitizer</a>
+						<a href="https://www.draw.io/" target="_blank">draw.io</a>
+						<a href="http://edu.dict.cn/" target="_blank">海词</a>
+						<a href="http://www.iciba.com/" target="_blank">爱词霸</a>
+						<a href="http://www.nciku.com/" target="_blank">词酷</a>
+<a href="https://youtubeplaylist.cc/" target="_blank">youtube下载</a>
+					</div>
+					
+					
+					<div id="linkstyle">
+	                    专利相关&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a target="_blank" href="http://www.cponline.gov.cn/">电子申请</a>
+						<a href="http://www.sipo.gov.cn/zljs/" target="_blank">专利检索</a>
+						<a href="http://www.patexplorer.com/" target="_blank">佰腾</a>
+						<a href="http://cpquery.sipo.gov.cn/index_zh.jsp?language=zh_CN" target="_blank">专利查询</a>
+						<a href="http://www.soopat.com/" target="_blank">soopat</a>
+						<a href="http://www.drugfuture.com/cnpat/cn_patent.asp" target="_blank">专利下载</a>
+						<a href="http://www.sipo.gov.cn/zljs/xxcx/" target="_blank">信息查询</a>
+					
+
+						
+					</div>					
+			        
+					<div id="linkstyle">
+	                    学术会议&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a target="_blank" href="http://www.iccge18.jp/">ICCGE18</a>
+
+					
+
+						
+					</div>					
+			        
+					
+					
+				</div><!--contentleft结束-->
+        </div>
+            
+        <div id="con3" style="display: none">
+				<!-- con3-1 数码部分开始--> 
+				<div id="contentleft">
+				
+
+					
+					<div id="linkstyle">
+	                    打印雕刻&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+						<a href="http://www.dayinhu.com/list/latest" target="_blank">打印虎</a>
+						<a href="https://www.thingiverse.com/" target="_blank">thingiverse</a>
+<a href="http://bbs.5imx.com/forum.php?mod=forumdisplay&fid=235" target="_blank">5imx</a>
+						
+
+					</div>		
+			        
+					
+					<div id="linkstyle">
+	                    卫星电视&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+						<a href="http://bbs.cnsat.net/" target="_blank">中文寻星</a>
+						<a href="http://tieba.baidu.com/f?kw=%E5%A4%A7%E9%94%85&ie=utf-8" target="_blank">大锅吧</a>
+						<a href="https://tieba.baidu.com/f?kw=%E4%B8%AD%E6%98%9F6b&ie=utf-8" target="_blank">中星6b</a>
+						<a href="http://tieba.baidu.com/f?kw=%E7%83%A7%E6%98%9F&ie=utf-8" target="_blank">烧星吧</a>
+				
+					</div>		
+			        
+					
+				
+					
+					<div id="linkstyle">
+	                    电视盒子&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a href="http://bbs.xiaomi.cn/forum-593-1.html" target="_blank">小米盒子</a>
+						<a href="http://www.hdpfans.com" target="_blank">hdpfans</a>
+						<a href="http://www.7po.com/forum-kaiboer-1.html" target="_blank">奇珀TV</a>
+						<a href="http://www.znds.com/bbs-137-1.html" target="_blank">znds</a>
+						<a href="http://apk.veryhd.net/" target="_blank">veryhd</a>
+						<a href="http://www.hd-tv.cn/" target="_blank">开博尔</a>
+						<a href="http://hd.letv.com/" target="_blank">乐视盒子</a>
+						<a href="http://bbs.coocaa.com/forum.php" target="_blank">酷开论坛</a>
+						<a href="http://tieba.baidu.com/f?kw=%BF%E1%BF%AA&fr=ala0" target="_blank">酷开吧</a>
+						<a href="http://www.znds.com/bbs-133-1.html" target="_blank">znds</a>
+
+					</div>					
+			        
+					
+
+					
+
+
+					<div id="linkstyle">
+	                    小米资源&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a href="http://bbs.xiaomi.cn/forum.php" target="_blank">小米论坛</a>
+						<a href="http://bbs.xiaomi.cn/forum-233-1.html" target="_blank">影音动漫</a>
+						<a href="http://bbs.xiaomi.cn/forum-230-1.html" target="_blank">软件区</a>
+						<a href="http://bbs.xiaomi.cn/forum-231-1.html" target="_blank">游戏区</a>
+						<a href="http://bbs.xiaomi.cn/forum-593-1.html" target="_blank">小米盒子</a>
+					</div>					
+			        
+					
+					<div id="linkstyle">
+	                    数码电子&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+						<a href="http://bbs.imp3.net/forum-272-1.html" target="_blank">iMP3</a>
+						<a href="http://forum.xda-developers.com/nook-hd/development" target="_blank">xda</a>
+						<a href="http://www.shoudian.org/forum-19-1.html" target="_blank">手电</a>
+						<a href="http://bbs.mydigit.cn/" target="_blank">数码之家</a>
+						<a href="http://www.crystalradio.cn/" target="_blank">矿石</a>
+						<a href="http://www.chongdiantou.com/forum.php" target="_blank">充电头</a>
+						<a href="http://bbs.asiatvro.com/" target="_blank">亚视</a>
+				
+
+					</div>		
+			        					
+				
+					
+
+
+		
+					<div id="linkstyle">
+	                    综合门户&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     					<a href="http://www.pcpop.com/" target="_blank">泡泡网</a>
+						<a href="http://www.zol.com.cn/" target="_blank">中关村</a>
+						<a href="http://www.pconline.com.cn/" target="_blank">太平洋</a>
+						<a href="http://www.intozgc.com/" target="_blank">走进中关村</a>
+
+					</div>					
+					
+					
+					<div id="linkstyle">
+	                    驱动门户&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a href="http://www.mydrivers.com/" target="_blank">驱动之家</a>
+						<a href="http://www.160.com/" target="_blank">驱动人生</a>
+
+					</div>					
+			        
+
+					
+					
+
+					
+				</div><!--contentleft结束-->
+				
+				<!--con3-3开始--> 
+				<div id="contentleft">	
+				<div id="linkstyle">
+	                    软件下载&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     					<a target="_blank" href="http://www.xunlei.com/" target="_blank">迅雷</a>
+			           	<a target="_blank" href="http://msdn.itellyou.cn/" target="_blank">itellyou</a>
+                        <a target="_blank" href="http://www.zdfans.com/" target="_blank">zdfans</a>
+						<a target="_blank" href="http://www.newxitong.com/" target="_blank">newxitong</a>
+						<a target="_blank" href="https://www.repaik.com/forum.php">睿派克</a>
+						<a target="_blank" href="http://www.xitongzhijia.net/">系统之家</a>
+
+
+						<a target="_blank" href="http://www.realqwh.cn/">秋无痕</a>
+						<a target="_blank" href="http://www.jinhu.me/">金狐</a>
+						<a target="_blank" href="http://zxkh19501.blog.163.com/">无约而来</a>
+
+						<a target="_blank" href="http://www.51gho.net/">电脑疯子</a>
+						
+						
+						
+					</div>					
+			        
+					
+					<div id="linkstyle">
+						网络资讯&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a href="http://www.cnbeta.com/" target="_blank">cnbeta</a>
+						<a href="http://cn.engadget.com/" target="_blank">瘾科技</a>
+						<a href="http://bbs.pcbeta.com/" target="_blank">pcbeta</a>
+						<a href="http://www.iplaysoft.com/" target="_blank">异次元</a>
+						<a href="http://blog.sina.com.cn/chinazzjj" target="_blank">老树博客</a>
+						<a href="http://www.ourcrack.com/" target="_blank">欧普下载</a>
+						<a href="http://www.appinn.com" target="_blank">小众软件</a>
+						<a href="http://www.ifanr.com/" target="_blank">爱范儿</a>
+						<a href="http://xbeta.info/" target="_blank">善用佳软</a>
+						<a href="http://www.x-berry.com/" target="_blank">软矿</a>
+
+					</div>
+					
+					<div id="linkstyle">
+	                    主机域名&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a target="_blank" href="http://sdww.zuq.cn">山东万网</a>
+						<a href="http://www.west263.com/" target="_blank">西数</a>
+						<a href="http://www.myhostadmin.net/default.asp" target="_blank">西数面板</a>
+						<a href="https://www.sudu.cn/" target="_blank">华夏</a>
+						<a target="_blank" href="http://www.china667.com/">汇网</a>
+						<a href="http://beian.vhostgo.com/" target="_blank">备案</a>
+						<a href="http://www.dns-diy.com/" target="_blank">三五</a>
+						<a href="http://www.cnkuai.cn/" target="_blank">快网</a>
+						<a href="http://www.godaddy.com" target="_blank">godaddy</a>
+						<a href="https://www.namesilo.com" target="_blank">namesilo</a>
+						<a href="https://www.dnspod.cn/" target="_blank">dnspod</a>
+						<a target="_blank" href="http://www.cnfox.net.cn/">中狐</a>
+						
+					</div>					
+			        	
+					
+					<div id="linkstyle">
+	                    个人网站&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a href="http://www.sdclxkq.org/" target="_blank">山东材料</a>
+						<a href="http://www.meitianhb.com/" target="_blank">美天</a>
+						<a href="http://www.crystcn.com" target="_blank">实验室</a>
+						<a href="http://www.godmobi.com" target="_blank">吉摩</a>
+						<a href="http://www.kimos.com.cn" target="_blank">kimos</a>
+						<a href="http://cyclone.w15.my667.com/" target="_blank">启航</a>
+						<a target="_blank" href="https://www.google.com/adsense/v3/app?hl=zh-CN">GoogleAdsense</a>
+					</div>					
+					
+					
+				
+					<div id="linkstyle">
+	                    设计素材&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a href="http://www.zcool.com.cn/" target="_blank">站酷</a>
+						<a href="http://www.lanrentuku.com/vector/background/" target="_blank">懒人</a>
+						<a href="http://www.58pic.com/" target="_blank">千图</a>
+						<a href="http://www.ooopic.com/" target="_blank">我图</a>
+						<a href="http://888pic.com/" target="_blank">包图</a>
+						<a href="http://www.cssmoban.com/" target="_blank">模板之家</a>
+						<a href="http://hao.shejidaren.com/index.html" target="_blank">设计导航</a>
+						<a href="http://jinan.baixing.com/" target="_blank">百姓</a>
+						<a href="http://www.sf-express.com/cn/sc/" target="_blank">顺丰</a>
+						
+					</div>
+					
+					
+					<div id="linkstyle">
+	                    无线网络&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a href="http://www.hiwifi.com/" target="_blank">极路由</a>
+						<a href="http://bbs.hiwifi.com/forum-93-1.html" target="_blank">极论坛</a>
+						<a href="http://r.xcloud.cc/" target="_blank">如意云</a>
+						<a href="www.miwifi.com" target="_blank">小米路由</a>
+						<a href="http://bbs.leikeyun.com/forum.php" target="_blank">磊科</a>
+						<a href="http://www.newbandeng.com/forum-113-1.html" target="_blank">newifi</a>
+						<a href="http://bbs.modouwifi.cn/" target="_blank">魔豆</a>
+						
+						<a href="http://forum.anywlan.com/" target="_blank">anywlan</a>
+						<a href="http://www.right.com.cn/" target="_blank">恩山</a>
+						<a href="http://www.test3g.com/" target="_blank">test3g</a>
+					</div>
+					
+					
+										<div id="linkstyle">
+	                    科学上网&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a href="https://www.youtube.com/" target="_blank">youtube</a>
+						<a href="https://twitter.com/home" target="_blank">twitter</a>
+						<a href="https://www.facebook.com/" target="_blank">facebook</a>
+						<a href="www.miwifi.com" target="_blank">小米路由</a>
+
+						<a href="http://www.pornhub.com/" target="_blank">&nbsp;</a>
+						<a href="http://forum.anywlan.com/" target="_blank">anywlan</a>
+
+						<a href="https://www.ebay.com/usr/91dizhi_1" target="_blank">ebay</a>
+						<a href="https://cloud.google.com/" target="_blank">gcp</a>
+					</div>
+					
+					
+
+					
+				</div><!--contentleft结束-->
+        </div>
+            
+      <!--以下4-交易版-开始--> 
+      <div id="con4" style="display: none">
+			  <!--con4-1开始--> 
+				<div id="contentleft">	
+				
+					<div id="linkstyle">
+	                    电商&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a href="http://www.taobao.com/" target="_blank">淘宝</a>
+						<a href="http://dacu.tmall.com/?spm=3.1000473.0.1.qcIlEI&ad_id=&am_id=130105969085f07c7457&cm_id=&pm_id=" target="_blank">天猫</a>
+						<a href="http://s.ershou.taobao.com/list/list.htm?spm=2007.1000337.6.2.MKx0sd&catid=50100398&st_edtime=1&ist=1" target="_blank">跳蚤街</a>
+						<a href="http://www.sfbest.com/" target="_blank">顺丰优选</a>
+						<a href="http://www.jd.com/" target="_blank">京东</a>
+						<a href="http://www.icson.com/" target="_blank">易迅</a>
+						<a href="http://www.newegg.com.cn/" target="_blank">新蛋</a>	
+						<a href="http://www.amazon.cn/" target="_blank">卓越</a>		
+						<a href="http://www.suning.com/" target="_blank">苏宁</a>	
+						<a href="http://www.dangdang.com/" target="_blank">当当</a>
+						<a href="http://www.yihaodian.com" target="_blank">一号店</a>
+						<a href="http://www.coo8.com/" target="_blank">库巴</a>
+						<a href="http://www.tao3c.com" target="_blank">高鸿</a>
+						<a href="http://www.myhaohao.com/" target="_blank">麦好好</a>
+					</div>					
+			        
+					
+					
+					<div id="linkstyle">
+	                    荐购&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						
+						<a href="http://www.zhe800.com/" target="_blank">聚独家</a>	
+						<a href="http://zhi.zhe800.com/" target="_blank">折800</a>	
+						<a href="http://www.quanmama.com/" target="_blank">券妈妈</a>
+						<a href="http://www.tsdxb.com/" target="_blank">掉馅饼</a>
+						<a href="http://www.mgpyh.com/" target="_blank">美国货</a>
+						<a href="http://weibo.com/3194506490/profile?mod=personinfo&rightmod=1&is_all=1" target="_blank">白菜</a>
+						<a href="http://pianyiduo.net/" target="_blank">便宜多</a>
+						<a href="http://www.zhizhizhi.com/" target="_blank">值值值</a>				
+						<a href="http://www.quwan.com/" target="_blank">趣玩</a>	
+						<a href="http://www.tz100.com/" target="_blank">淘者</a>
+						<a href="http://www.letsebuy.com/" target="_blank">E购</a>	
+
+						
+					</div>					
+			    
+			    
+					<div id="linkstyle">
+	                    海淘&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							
+						<a href="http://www.amazon.com/" target="_blank">amazon</a>		
+						<a href="http://haiwai.etao.com/?spm=0.0.0.0.tkyFSS" target="_blank">一淘海淘</a>		
+						<a href="http://www.mgpyh.com/" target="_blank">美国货</a>
+						<a href="http://www.tz100.com/" target="_blank">淘者</a>
+						<a href="http://www.letsebuy.com/" target="_blank">E购</a>	
+						
+					</div>					
+			    
+
+					<div id="linkstyle">
+	                    团购&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a href="http://www.taobao.com/" target="_blank">淘宝</a>
+						<a href="http://www.etao.com/" target="_blank">一淘</a>
+						<a href="http://vip.etao.com/" target="_blank">一淘专享</a>
+						<a href="http://bbs.egou.com/" target="_blank">易购</a>
+						<a href="http://www.tuan800.com/" target="_blank">团800</a>
+						<a href="http://www.manyituan.com/" target="_blank">满意团</a>
+						<a href="http://ju.taobao.com/" target="_blank">聚划算</a>	
+						<a href="http://www.36588.com.cn/" target="_blank">世纪开元</a>	
+						<a href="http://tuan.zol.com/" target="_blank">z团</a>	
+						<a href="http://www.jiukuaiyou.com/" target="_blank">九块邮</a>	
+						<a href="http://tejia.taobao.com/" target="_blank">天天特价</a>	
+					</div>					
+			    	
+
+					<div id="linkstyle">
+	                    旅游&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a href="http://trip.taobao.com/" target="_blank">淘宝旅行</a>	
+						<a href="http://www.jhgl.cn/index.html" target="_blank">嘉华</a>	
+						<a href="http://www.sdcct.com/" target="_blank">康辉</a>	
+						<a href="http://www.tuniu.com/" target="_blank">途牛</a>
+						<a href="http://www.aoyou.com/jinan" target="_blank">中青旅</a>		
+<a href="http://www.elvxing.net/" target="_blank">E旅行</a>								
+
+						<a href="http://lailaihui.com/" target="_blank">来来会</a>
+						<a href="http://www.lvmama.com/" target="_blank">驴妈妈</a>
+						<a href="http://www.go2tw.cn/" target="_blank">台湾自由行</a>
+						<a href="http://www.3hk.cn/" target="_blank">上香港</a>
+						<a href="http://www.hanyouwang.com/" target="_blank">韩游网</a>	
+						<a href="http://www.qunar.com/" target="_blank">去哪儿</a>	
+						<a href="http://go.360.cn/" target="_blank">360</a>	
+						
+					</div>					
+			    			
+
+					<div id="linkstyle">
+	                    游记&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					
+						<a href="http://www.qyer.com/" target="_blank">穷游网</a>
+						<a href="http://www.mafengwo.cn/" target="_blank">马蜂窝</a>
+						<a href="http://www.16fan.com/" target="_blank">十六番</a>
+						<a href="http://www.daoduoduo.com/" target="_blank">岛多多</a>
+						<a href="http://www.taihuabbs.com/" target="_blank">泰华</a>
+
+						
+					</div>					
+			    					
+
+					
+				</div><!--contentleft结束-->
+				
+			  <!--con4-2开始--> 
+				<div id="contentleft">	
+				
+
+					
+					<div id="linkstyle">
+	                    综合&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     				<a href="http://www.sd001.com/forum.php?mod=forumdisplay&fid=251&filter=author&orderby=dateline" target="_blank">熊坛</a>
+						<a href="http://www.jd-bbs.com/forum.php?mod=forumdisplay&fid=97&filter=author&orderby=dateline" target="_blank">家电</a>
+						<a href="http://shop.tompda.com/mall/indexbbs.asp?level=1" target="_blank">TomPDA</a>
+						<a href="http://bbs.dospy.com/forum-141-1.html" target="_blank">塞班</a>
+						<a href="http://itbbs.pconline.com.cn/es/f671334.html" target="_blank">太平洋</a>
+						<a href="http://we.pcinlife.com/forum-298-1.html" target="_blank">PCinlife二手</a>
+						<a href="http://www.chiphell.com/forum-26-1.html" target="_blank">chiphell</a>
+						<a href="http://www.hdpfans.com/forum.php?mod=forumdisplay&fid=28&filter=author&orderby=dateline" target="_blank">hdpfans交易</a>
+					</div>					
+					
+					
+				
+					<div id="linkstyle">
+	                    平板&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a href="http://s.ershou.taobao.com/list/list.htm?spm=2007.1000261.0.0.UO6owx&catid=50100424&st_trust=1&ist=1" target="_blank">淘宝平板</a>
+						<a href="http://bbs.maxpda.com/forum.php?mod=forumdisplay&fid=44&filter=typeid&typeid=812">maxpda</a>
+						<a href="http://s.2.taobao.com/list/list.htm?q=nexus+7&divisionId=&stype=1" target="_blank">nexus7</a>
+						<a href="http://s.2.taobao.com/list/list.htm?q=kindle&divisionId=&stype=1" target="_blank">kindle</a>
+						<a href="http://www.jd-bbs.com/forum.php?mod=forumdisplay&fid=97&filter=typeid&typeid=77&orderby=dateline" target="_blank">家电</a>
+						<a href="http://bbs.imp3.net/forum.php?mod=forumdisplay&fid=63&filter=author&orderby=dateline&typeid=135" target="_blank">imp3</a>
+						<a href="http://shop.tompda.com/mall/indexbbs_list.asp?level=1&cat_id=9000000&cat_name=%CB%E6%C9%ED%D3%B0%D2%F4" target="_blank">tom影音</a>
+						<a href="http://shop.tompda.com/mall/indexbbs_list.asp?level=1&cat_id=2000000&cat_name=PDA%D6%F7%BB%FA" target="_blank">tompda</a>
+						<a href="http://bbs.gfan.com/forum.php?mod=forumdisplay&fid=23&filter=sortid&sortid=548&searchsort=1&bbs_ppai_548=20" target="_blank">机锋平板</a>
+						<a href="http://www.5fans.com.cn/forum-42-1.html" target="_blank">ifive</a>
+						<a href="http://bbs.zoopda.com/forum.php?group=deal" target="_blank">煮机网</a>
+						<a href="http://www.hi-pda.com/forum/" target="_blank">hipda</a>
+					</div>
+					
+					
+				    <div id="linkstyle">
+	                    手机&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a href="http://shop.tompda.com/mall/indexbbs_list.asp?cat_id=1000000" target="_blank">Tom手机</a>
+						<a href="http://bbs.anzhi.com/forum-107-1.html" target="_blank">安智网</a>
+						<a href="http://itbbs.pconline.com.cn/es/f240027.html" target="_blank">太平洋</a>
+						<a href="http://bbs.gfan.com/forum.php?mod=forumdisplay&fid=23&filter=author&orderby=dateline" target="_blank">机锋</a>
+						<a href="http://bbs.xda.cn/forum-115-1.html" target="_blank">xda</a>	
+						<a href="http://bbs.dospy.com/forum-141-1.html" target="_blank">塞班</a>
+						<a href="http://bbs.wpcnn.com/forum-100-1.html" target="_blank">掌界交易</a>
+						<a href="https://s.2.taobao.com/list/list.htm?spm=2007.1000337.6.2.VZHHvT&st_edtime=1&q=%BA%EC%C3%D7+note3+%B8%DF%C5%E4+%C8%AB%CD%F8&ist=0" target="_blank">淘红米</a>
+						<a href="http://bbs.sonyue.com/forum-1634-1.html" target="_blank">盛悦</a>
+						
+						
+
+						<a href="http://shop.coolpad.cn/" target="_blank">酷派</a>
+						<a href="http://item.jd.com/1043963.html" target="_blank">大神F1</a>
+						<a href="http://www.vmall.com/" target="_blank">华为</a>
+						<a href="http://www.xiaomi.com/" target="_blank">小米</a>
+					</div>		
+			        
+					
+				    <div id="linkstyle">
+	                    相机&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a href="http://www.sd001.com/forum.php?mod=forumdisplay&fid=251&filter=author&orderby=dateline" target="_blank">熊坛</a>
+						<a href="http://www.jd-bbs.com/forum.php?mod=forumdisplay&fid=97&filter=typeid&typeid=75&orderby=dateline" target="_blank">家电</a>
+						<a href="http://shop.tompda.com/mall/indexbbs_list.asp?level=1&cat_id=4000000&cat_name=%CA%FD%C2%EB%CF%E0%BB%FA" target="_blank">Tom相机</a>
+						<a href="http://www.camgle.com/forum.php?mod=forumdisplay&fid=10&filter=author&orderby=dateline" target="_blank">中华相机</a>
+						<a href="http://www.fengniao.com/secforum/sec_index.php?sortfield=dateline&sortorder=desc&daysprune=1" target="_blank">蜂鸟</a>
+						<a href="http://mall.xitek.com/index.php" target="_blank">无忌</a>		
+						<a href="http://itbbs.pconline.com.cn/es/type_g5355g53cdg76f8g673a-681102-postat.html" target="_blank">太平洋</a>
+						<a href="http://www.dospy.com/bbs/forumdisplay.php?fid=141&filter=type&typeid=390" target="_blank">塞班</a>
+						<a href="http://www.douban.com/group/guoer/" target="_blank">豆瓣二手</a>
+						<a href="http://www.douban.com/group/111979/" target="_blank">豆瓣器材</a>
+						<a href="http://s.2.taobao.com/list/list.htm?spm=2007.1000337.6.2.ypwtWp&st_edtime=1&ist=1&vendor=3" target="_blank">淘宝二手</a>
+						<a href="http://s.taobao.com/search?spm=a230r.1.8.5.poOCDJ&promote=0&sort=old_starts&initiative_id=tbindexz_20131226&tab=all&q=450d#J_relative" target="_blank">淘宝</a>
+						<a href="http://s.2.taobao.com/list/list.htm?spm=2007.1000337.6.2.Uh6Dmx&st_edtime=1&q=d90&ist=0" target="_blank">d90</a>
+					</div>		
+			        
+					
+				    <div id="linkstyle">
+	                    电玩&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a href="http://bbs.tgbus.com/forum.php?mod=forumdisplay&fid=50&filter=author&orderby=dateline" target="_blank">TgBus交易</a>
+						<a href="http://bbs.tgbus.com/forum-12-1.html" target="_blank">巴士</a>
+						<a href="http://www.cngba.com/forum.php?mod=forumdisplay&fid=128&filter=author&orderby=dateline" target="_blank">cngba</a>
+						<a href="http://s.2.taobao.com/list/list.htm?spm=2007.1000337.6.2.8y5s6v&st_edtime=1&q=xbox&ist=0" target="_blank">淘xbox</a>
+						<a href="http://s.2.taobao.com/list/list.htm?q=xbox+%CA%D6%B1%FA&search_type=item" target="_blank">手柄</a>
+						<a href="http://www.xbox-skyer.com/forumdisplay.php?f=43" target="_blank">skyer交易</a>
+						<a href="http://www.xbox-skyer.com/" target="_blank">skyer</a>
+						<a href="http://game.ali213.net/forum.php?mod=forumdisplay&fid=361&filter=typeid&typeid=2554" target="_blank">游侠</a>
+						<a href="http://bbs.a9vg.com/forum.php?gid=349" target="_blank">a9vg</a>
+						<a href="http://s.2.taobao.com/list/list.htm?spm=2007.1000337.6.2.XVMTgg&st_edtime=1&q=kinect&ist=0" target="_blank">kinect</a>
+						<a href="http://s.2.taobao.com/list/list.htm?spm=2007.1000337.6.2.DvJO8n&st_edtime=1&q=%CC%E5%B8%D0&ist=0" target="_blank">体感</a>
+					
+					</div>		
+			        
+					
+					<div id="linkstyle">
+	                    本本&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a href="http://s.2.taobao.com/list/list.htm?spm=2007.1000337.6.2.HA4Ts0&catid=50100423&st_edtime=1&start=0&end=1100&ist=1&ppath=20000%3A11119" target="_blank">淘二手本</a>
+						<a href="http://shop.tompda.com/mall/indexbbs_list.asp?cat_name=%C1%AA%CF%EB&cat_ID=3100000" target="_blank">Tom联想本</a>
+						<a href="http://jn.58.com/bijiben/" target="_blank">58同城本</a>
+						<a href="http://itbbs.pconline.com.cn/es/f671334.html" target="_blank">太平洋本</a>
+
+					
+					</div>		
+			        
+										
+					<div id="linkstyle">
+	                    汽车&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a href="http://www.bitauto.com" target="_blank">易车网</a>
+						<a href="http://www.xcar.com.cn/" target="_blank">爱卡</a>
+						<a href="http://www.autohome.com.cn/" target="_blank">汽车之家</a>
+						<a href="http://auto.tianya.cn/" target="_blank">天涯</a>
+						<a href="http://club.autohome.com.cn/bbs/forum-c-2896-1.html" target="_blank">汽车小昂</a>
+						<a href="http://www.xcar.com.cn/bbs/forumdisplay.php?fid=974" target="_blank">爱卡小昂</a>
+						<a href="https://club.autohome.com.cn/bbs/forum-c-86-1.html" target="_blank">汽车夏朗</a>
+						<a href="http://www.xcar.com.cn/bbs/forumdisplay.php?fid=932" target="_blank">爱卡夏朗</a>
+						<a href="https://club.autohome.com.cn/bbs/forum-c-771-1.html#pvareaid=6826792" target="_blank">汉兰达</a>
+						<a href="http://www.xcar.com.cn/bbs/forumdisplay.php?fid=478" target="_blank">爱卡</a>
+						<a href="http://tieba.baidu.com/f?fr=wwwt&kw=%E6%B1%89%E5%85%B0%E8%BE%BE" target="_blank">贴吧</a>
+						<a href="http://tieba.baidu.com/f?kw=%E6%96%B0%E6%B1%89%E5%85%B0%E8%BE%BE&ie=utf-8" target="_blank">新汉兰达</a>
+
+					
+					</div>		
+			        
+					<div id="linkstyle">
+	                    其它&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a href="http://s.2.taobao.com/list/list.htm?spm=2007.1000337.6.2.pD7pJC&st_edtime=1&q=%D0%A1%C3%D7%CA%D6%BB%B7&ist=0" target="_blank">小米手环</a>
+
+
+					
+					</div>		
+			        
+					
+					
+
+								
+
+					
+				</div><!--contentleft结束-->
+				
+      </div>
+      <!以上--4--交易版-结束-->
+	  
+ 
+<!以下--5--影音版-开始-->           
+			<div id="con5" style="display: none">
+			<!--5-con1开始--> 
+				<div id="contentleft">	
+				
+					<div id="linkstyle">
+	                    直播&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a target="_blank" href="http://www.jisutiyu.com/">极速体育</a>
+						<a target="_blank" href="https://www.24zbw.com/">24直播</a>
+					
+					</div>					
+			        
+										<div id="linkstyle">
+	                    投影&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a target="_blank" href="http://www.hd199.com/">影音新时代</a>
+					
+					
+					</div>					
+			        
+					<div id="linkstyle">
+	                    影评&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a target="_blank" href="http://movie.douban.com/">豆瓣</a>
+						<a target="_blank" href="http://www.mtime.com/">时光网</a>
+						<a target="_blank" href="http://tvfantasy.net/">天涯小筑</a>
+					</div>					
+			        
+					
+					<div id="linkstyle">
+						在线&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a href="http://www.yymeiju.com/" target="_blank">yy美剧</a>
+						<a href="http://www.ttmeiju.com/" target="_blank">天天美剧</a>
+						<a href="http://www.2kll.com/" target="_blank">2kll</a>
+						<a href="http://www.piaohua.com/" target="_blank">2kan</a>
+						<a href="http://www.tutuzx.net/" target="_blank">兔兔</a>
+						<a href="http://www.jinlinbang.com/" target="_blank">金鳞榜</a>
+						<a href="http://www.f1dy.com/" target="_blank">飞翼</a>
+						<a href="http://www.dy161.com/" target="_blank">dy161</a>
+						
+						<a href="http://v.726.com/" target="_blank">影视搜索</a>
+						<a href="http://v.iqilu.com/live/zypd/" target="_blank">山东综艺</a>
+						<a href="http://dianying.fm/category/" target="_blank">电影FM</a>
+						<a href="http://www.anqiaoqiao.com/" target="_blank">俺瞧瞧</a>
+						<a href="http://www.2kandy.com/" target="_blank">2kan</a>
+					</div>
+					
+					
+					<div id="linkstyle">
+						论坛&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a href="http://shinybbs.com/" target="_blank">深影</a>
+						<a href="http://www.wyzpp.com/forums/list/52984.html" target="_blank">片片</a>
+						<a href="http://www.ncar.cc/bbs/forum.php" target="_blank">耐卡</a>
+						<a href="http://www.49lou.com/" target="_blank">49lou</a>
+						<a href="http://www.lztor.com/" target="_blank">噜猪</a>
+						
+						
+					</div>
+					
+					
+					<div id="linkstyle">
+						下载&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a href="http://www.0daydown.com/category/movies" target="_blank">0day</a>
+						<a href="http://yyets.com/" target="_blank">人人</a>
+						<a href="http://www.ygdy8.com/" target="_blank">阳光</a>
+						<a href="http://www.bt5156.com/" target="_blank">bt5156</a>
+						<a href="http://www.dygod.com/" target="_blank">dygod</a>
+						<a href="http://www.tutumv.net/" target="_blank">兔兔</a>
+						<a href="http://www.zhandi.cc/" target="_blank">战地</a>
+						<a href="http://www.rs05.com/" target="_blank">人生05</a>
+						<a href="http://www.xiaopian.com/" target="_blank">小调</a>
+						<a href="http://www.6vhao.com/" target="_blank">6v</a>
+						<a href="http://hdscg.com/" target="_blank">圣城</a>
+						<a href="http://www.mp4ba.com/" target="_blank">高清MP4</a>
+					</div>
+					
+					
+					<div id="linkstyle">
+						综艺&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a target="_blank" href="http://www.iqiyi.com/a_19rrgid0kx.html">爸爸去哪儿2</a>
+						<a href="http://www.iqiyi.com/a_19rrgid469.html" target="_blank">我为歌狂2</a>
+						<a target="_blank" href="http://www.iqiyi.com/a_19rrhc14wx.html">明星到我家</a>
+						<a target="_blank" href="http://v.qq.com/variety/column/column_10034.html">喜从天降</a>
+
+						<a target="_blank" href="http://www.iqiyi.com/zongyi/kldby.html?src=focustext_6_20130410_2">快本</a>
+						<a target="_blank" href="http://www.iqiyi.com/a_19rrgifu4p.html">花样爷爷</a>
+						<a target="_blank" href="http://www.hunantv.com/v/1/103887/index.html">我是歌手3</a>
+						<a target="_blank" href="http://tv.sohu.com/ttxs/">天天向上</a>
+						<a target="_blank" href="http://tv.sohu.com/s2014/zghgqdej/">好歌曲2</a>
+						<a target="_blank" href="http://list.hunantv.com/album/56.html">变形计</a>
+					</div>
+					
+					
+					<div id="linkstyle">
+						爱好&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a target="_blank" href="http://www.ed2000.com/">ED2K</a>
+						<a href="http://www.simplecd.me/" target="_blank">simplecd</a>
+						<a target="_blank" href="http://www.bttiantang.com/">BT天堂</a>
+						<a target="_blank" href="http://bbs.1lou.com/">BT之家</a>
+
+						<a target="_blank" href="http://www.18xv.com/">&nbsp;&nbsp;</a>
+					</div>
+					
+					
+
+					
+				</div><!--contentleft结束-->
+				
+			<!--con5-2开始--> 
+				<div id="contentleft">	
+					
+
+					
+
+					
+
+					
+
+
+					
+
+					
+				</div><!--contentleft结束-->
+      </div>
+      <!以上--5--影音版-结束-->  	
+
+			<!以下--6--教育版-开始-->           
+			<div id="con6" style="display: none">
+			<!--6-con1开始--> 
+				<div id="contentleft">	
+				
+					<div id="linkstyle">
+	                    小学&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a target="_blank" href="http://blog.sina.com.cn/ddduck3000">作业</a>
+						<a target="_blank" href="http://bishun.shufaji.com/">查笔顺</a>
+						<a target="_blank" href="http://www.chazidian.com/">查字典</a>
+						<a target="_blank" href="http://www.shuifeng.net/Dic/Html/Index.htm">田字格</a>
+						<a target="_blank" href="http://jinan.safetree.com.cn/SafeSchool/TeacherCourse.aspx">安全教育</a>
+						<a target="_blank" href="https://www.2-class.com/">第2课堂</a>
+						<a target="_blank" href="http://rrt.jndjg.cn/">人人通</a>
+						<a target="_blank" href="http://lixia.jndjg.cn/">历下人人通</a>
+						
+
+
+						
+					</div>					
+			        	
+					
+					
+					
+					<div id="linkstyle">
+						绘画&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a target="_blank" href="http://ertong.rouding.com/ertonghua/">儿童画</a>
+						<a target="_blank" href="http://www.woaihuahua.com/ertong/">我爱画画网</a>
+						<a target="_blank" href="http://www.sems.cc/jx/xm/">线描</a>
+
+					</div>
+					
+					
+					
+					<div id="linkstyle">
+	                    儿童&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a href="http://www.meimajidi.com/forum.php" target="_blank">美妈</a>
+						<a href="http://www.qiaohumi.com/forum.php" target="_blank">巧虎迷</a>
+						<a href="http://www.jnmama.com/forum.php" target="_blank">妈网</a>
+						<a href="http://blog.sina.com.cn/u/2337436455" target="_blank">璐瑶</a>
+						<a href="http://www.yey.com" target="_blank">数字平台</a>
+						<a href="http://blog.sina.com.cn/u/2296516171" target="_blank">大二班</a>
+
+					</div>					
+					
+					
+
+					
+
+					
+				</div><!--contentleft结束-->
+				
+			<!--con6-2开始--> 
+				<div id="contentleft">	
+				
+
+					
+										<div id="linkstyle">
+						小魔仙&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a href="http://so.iqiyi.com/so/q_%E5%B7%B4%E6%8B%89%E6%8B%89%E5%B0%8F%E9%AD%94%E4%BB%99?source=input&r=994619074607" target="_blank">小魔仙</a>
+						<a href="http://www.56.com/w51/album-aid-4919871.html" target="_blank">巧虎</a>
+						<a href="http://so.56.com/video/%E5%B7%A7%E8%99%8E%20%E5%A4%A7%E9%99%86/?s=&t=&c=" target="_blank">大陆巧虎</a>
+						<a href="http://www.youban.com/media-33611.html" target="_blank">巧虎12</a>
+						<a href="http://www.youban.com/media/" target="_blank">有伴</a>
+					</div>
+					
+					
+					<div id="linkstyle">
+						喜羊羊&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a href="http://f.hd.baofeng.com/detail/215/detail-83715.html" target="_blank">喜羊羊</a>
+						<a href="http://www.iqiyi.com/a_19rrgjau2w.html" target="_blank">懒羊羊当大厨</a>
+						<a href="http://www.youku.com/show_page/id_zf392a4e83f4611e2a19e.html" target="_blank">开心日记</a>
+						<a href="http://www.imanshi.com/sgfzmsdmx/" target="_blank">美食大冒险</a>
+
+					</div>
+					
+					
+					<div id="linkstyle">
+						米奇&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a href="http://so.letv.com/comic/16.html" target="_blank">米奇1</a>
+						<a href="http://so.letv.com/comic/81539.html" target="_blank">米奇2</a>
+						<a href="http://so.letv.com/comic/84942.html" target="_blank">米老鼠新传</a>
+						<a href="http://so.letv.com/comic/85358.html" target="_blank">米老鼠群星会</a>
+
+					
+					</div>
+					
+					
+
+					
+					<div id="linkstyle">
+						电影&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+						<a href="http://www.kangxitv.com/cartoon/bingxueqiyuan/play-264321-144231-3/" target="_blank">冰雪奇缘</a>						
+						<a href="http://www.kangxitv.com/dongman/liyuedamaoxian/play-1052-91256-2/" target="_blank">里约大冒险</a>	
+					</div>
+					
+					
+					<div id="linkstyle">
+						维尼&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+						<a href="http://so.letv.com/comic/82528.html" target="_blank">小熊维尼与跳跳虎1</a>
+						<a href="http://so.letv.com/comic/82529.html" target="_blank">维尼2</a>
+						<a href="http://so.letv.com/comic/85346.html" target="_blank">小熊维尼历险记</a>
+					</div>
+					
+					
+
+					
+					<div id="linkstyle">
+						芭比&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a href="http://www.iqiyi.com/dongman/bbzmxhz.html" target="_blank">芭比-梦想豪宅</a>
+						<a href="http://www.iqiyi.com/dongman/bbzgzxx.html" target="_blank">芭比-公主学校</a>
+						<a href="http://www.iqiyi.com/dongman/bbxzdmm.html" target="_blank">芭比仙子</a>
+						<a href="http://www.hunantv.com/v/1/50965/" target="_blank">村长趣哪鹅</a>
+					</div>
+					
+					
+					<div id="linkstyle">
+						低幼&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a href="http://www.iqiyi.com/dongman/txbb.html" target="_blank">天线宝宝</a>
+						<a href="http://www.iqiyi.com/dongman/hybb.html" target="_blank">花园宝宝</a>
+						<a href="http://www.56.com/w41/album-aid-10846282.html" target="_blank">跟着乐乐学轮滑</a>
+					</div>
+					
+					
+					<div id="linkstyle">
+						其它&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						
+						<a href="http://so.iqiyi.com/so/q_%E6%9E%9C%E5%AE%9D%E7%89%B9%E6%94%BB?source=input&r=868235724085" target="_blank">果宝特攻</a>
+						<a href="http://v.pps.tv/splay_166181.html" target="_blank">巴巴爸爸</a>
+						<a href="http://www.iqiyi.com/a_19rrgjbg19.html#vfrm=2-3-0-1" target="_blank">小马宝莉</a>
+						
+						<a href="http://www.iqiyi.com/dongman/atxddl.html" target="_blank">朵拉</a>
+						<a href="http://www.tudou.com/albumcover/dYj6gIjtW14.html" target="_blank">摩尔庄园</a>
+						<a href="http://www.iqiyi.com/dongman/hmbb2.html" target="_blank">海绵宝宝</a>
+						
+						<a href="http://www.iqiyi.com/dongman/xcmzhqdmx.html" target="_blank">熊出没</a>
+						<a href="http://www.xue100.net/" target="_blank">故事</a>
+						<a href="http://v.qq.com/cover/h/hmc0z7kb4pldg4d.html" target="_blank">倒霉熊1</a>
+						<a href="http://v.qq.com/cover/f/fp7ekobo2a4fzo7.html" target="_blank">倒霉熊2</a>
+						<a href="http://so.iqiyi.com/so/q_%E5%A4%A7%E8%80%B3%E6%9C%B5%E5%9B%BE%E5%9B%BE" target="_blank">图图</a>
+						<a href="http://www.iqiyi.com/dongman/au.html" target="_blank">阿U</a>
+
+						
+					</div>
+					
+					
+
+					
+
+					
+
+					
+
+
+					
+
+					
+				</div><!--contentleft结束-->
+      </div>
+      <!以上--6--教育版-结束-->  		  
+ 
+			<!以下--7--生活版-开始-->           
+			<div id="con7" style="display: none">
+			<!--7-con1开始--> 
+				<div id="contentleft">	
+				
+					<div id="linkstyle">
+	                    购房&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a href="http://jn.soufun.com/" target="_blank">房天下</a>
+						<a href="http://esf.jn.fang.com/house-a0386/c2110-d2200-g23-j2100-k2150-h316-l3110/" target="_blank">搜房历下</a>
+						<a href="http://www.jnhouse.com/esf/index.php?cityarea=29&price=110-200&totalarea=100-150&switch=1&room_option=3" target="_blank">房地产</a>
+						<a href="http://jn.58.com/lixia/ershoufang/e3/?huansuanyue=110_200&area=100_150&bunengdaikuan=0&PGTID=0d30000c-0010-b736-3209-10ba1596aaff&ClickID=1" target="_blank">58同城</a>
+						<a href="http://jn.lianjia.com/ershoufang/lixia/l3ba100ea140bp110ep200/" target="_blank">链家</a>
+						<a href="http://jn.ganji.com/" target="_blank">赶集网</a>
+						<a href="http://jinan.baixing.com/" target="_blank">百姓网</a>
+						<a href="http://www.jnfg.gov.cn/" target="_blank">房管局</a>
+					</div>		
+			        	
+					
+					<div id="linkstyle">
+	                    装修&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a href="http://home.focus.cn/msglist/1706/" target="_blank">搜狐焦点</a>
+						<a href="http://www.houzz.com/" target="_blank">houzz</a>
+						<a href="https://www.taobao.com/market/jia/2014index.php?spm=a2150.6708229.a214d5u.1.tDgewC" target="_blank">淘宝家装</a>
+						<a href="http://www.libaclub.com/f_8_1.htm" target="_blank">篱笆网</a>
+						<a href="http://jn.to8to.com/" target="_blank">土巴兔</a>
+						<a href="http://www.jnmama.com/forum-42-1.html" target="_blank">妈网</a>
+
+					</div>					
+			        	
+					
+
+					
+
+					
+
+					
+				</div><!--contentleft结束-->
+				
+			<!--con7-2开始--> 
+				<div id="contentleft">	
+				
+
+					
+					<div id="linkstyle">
+	                    个人&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a href="http://bbs.eeefan.com" target="_blank">易饭</a>
+						<a href="http://www.crystcn.com" target="_blank">实验室</a>
+						<a href="http://www.godmobi.com" target="_blank">吉摩</a>
+						<a href="http://www.kimos.com.cn" target="_blank">kimos</a>
+						<a href="http://cyclone.w15.my667.com/" target="_blank">启航</a>
+						<a target="_blank" href="https://www.google.com/adsense/v3/app?hl=zh-CN">GoogleAdsense</a>
+						<a target="_blank" href="https://code.google.com/p/goagent/">goagent</a>
+					</div>					
+					
+					
+				
+					<div id="linkstyle">
+	                    设计&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a href="http://www.zcool.com.cn/" target="_blank">站酷</a>
+						<a href="http://www.jnhouse.com/" target="_blank">房地产</a>
+						<a href="http://jn.58.com/" target="_blank">58同城</a>
+						<a href="http://jn.ganji.com/" target="_blank">赶集网</a>
+						<a href="http://jinan.baixing.com/" target="_blank">百姓网</a>
+						<a href="http://www.sf-express.com/cn/sc/" target="_blank">顺丰</a>
+					</div>
+					
+					
+					<div id="linkstyle">
+						股票&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a href="http://stock.eastmoney.com/" target="_blank">东方</a>&nbsp;
+						<a href="http://guba.eastmoney.com/" target="_blank">股吧</a>&nbsp;
+						<a href="http://finance.ifeng.com/stock/" target="_blank">凤凰</a>
+						<a href="http://www.55188.com/forumdisplay.php?fid=8&filter=0&orderby=dateline&ascdesc=DESC" target="_blank">理想论坛</a>
+						<a href="http://bbs.macd.cn/forumdisplay.php?fid=25&filter=0&orderby=dateline&ascdesc=DESC" target="_blank">MACD</a>
+						<a href="http://dtdg777.blog.163.com/" target="_blank">777</a>
+						<a href="http://live.9666.cn/111/" target="_blank">后知后觉</a>
+						<a href="http://live.new-rand.cn/128/" target="_blank">财赋</a>
+						<a href="http://blog.sina.com.cn/u/1283472050" target="_blank">财赋博客</a>
+					</div>
+					
+					
+					<div id="linkstyle">
+						健身&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a href="http://www.tudou.com/listplay/ublsoX8v2Lo/oSzwA3d0SIo.html" target="_blank">芭蕾</a>
+						<a target="_blank" href="http://www.tudou.com/programs/view/M6QliL7MD90/">有氧健身操</a>
+					</div>
+					
+										<div id="linkstyle">
+						户外&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a href="http://www.7k7k.com/" target="_blank">7k7k</a>
+						<a href="http://www.jnhw.cn/" target="_blank">三人行</a>
+						<a href="http://bbs.8264.com/" target="_blank">8264</a>
+
+					
+					</div>
+					
+					
+					<div id="linkstyle">
+						游戏&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a href="http://www.7k7k.com/" target="_blank">7k7k</a>
+						<a href="http://www.4399.com/special/194.htm" target="_blank">巧虎游戏</a>
+						<a href="http://www.4399.com/special/114.htm" target="_blank">芭比</a>
+						<a href="http://www.4399.com/special/236.htm" target="_blank">白雪公主</a>
+					
+					</div>
+					
+					
+
+					
+
+					
+
+					
+
+
+					
+
+					
+				</div><!--contentleft结束-->
+      </div>
+      <!以上--7--生活版-结束-->  	
+
+	  
+			<!以下--8--备用版-开始-->           
+			<div id="con8" style="display: none">
+			<!--8-con1开始--> 
+				<div id="contentleft">	
+				
+					<div id="linkstyle">
+	                    书法&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a target="_blank" href="http://www.9610.com/">书法空间</a>
+						<a target="_blank" href="http://www.9610.com/index1.htm">书法资料库</a>
+						<a target="_blank" href="http://www.freehead.com/forum.php">中国书法网</a>
+						<a href="http://bbs.china-shufajia.com/" target="_blank">书法家</a>
+						<a href="http://www.shufa.org/" target="_blank">书画公社</a>
+						<a href="http://www.shufajianghu.com/bbs/portal.php" target="_blank">书法江湖</a>
+						<a href="http://www.zhshw.com/" target="_blank">中华书画</a>
+						<a href="http://www.zgsfj.com/" target="_blank">书法家导航</a>
+						<a href="http://www.shufazidian.com/" target="_blank">书法字典</a>
+
+						
+					</div>		
+					
+			        	
+										<div id="linkstyle">
+	                    篆刻&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a target="_blank" href="http://bbs.zgzkw.com/">中国篆刻网</a>
+						<a target="_blank" href="http://www.freehead.com/forum-16-1.html">中国书法网篆刻区</a>
+						<a target="_blank" href="http://bbs.xlys1904.com/forum-3-1.html">西冷网</a>
+						<a href="http://bbs.china-shufajia.com/forum-29-1.html" target="_blank">篆刻展厅</a>
+						<a href="http://v.baidu.com/v?word=%E7%AF%86%E5%88%BB&ct=301989888&rn=20&pn=0&db=0&s=0&fbl=800&ie=utf-8" target="_blank">篆刻教学视频</a>
+				
+					</div>					
+			        	
+					
+								        	
+										<div id="linkstyle">
+	                    木工&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a target="_blank" href="http://www.zuojiaju.com/forum.php">木工爱好者</a>
+
+
+					</div>					
+			        	
+					
+					
+					<div id="linkstyle">
+						山口&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a target="_blank" href="http://i.youku.com/u/UNjAxOTQ1NzQ4">广场舞</a>
+						<a target="_blank" href="http://mail.10086.cn/">139邮箱</a>
+						<a target="_blank" href="http://mail.126.com/">126邮箱</a>
+						<a target="_blank" href="http://weibo.com">新浪微博</a>
+						<a target="_blank" href="http://taian.dzwww.com/">泰安新闻</a>
+						<a target="_blank" href="http://www.qlwb.com.cn/">齐鲁晚报</a>
+					</div>
+					
+					
+
+					
+
+					
+				</div><!--contentleft结束-->
+				
+			<!--con8-2开始--> 
+				<div id="contentleft">	
+				
+
+					
+					<div id="linkstyle">
+	                    个人&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a href="http://bbs.eeefan.com" target="_blank">易饭</a>
+						<a href="http://www.crystcn.com" target="_blank">实验室</a>
+						<a href="http://www.godmobi.com" target="_blank">吉摩</a>
+						<a href="http://www.kimos.com.cn" target="_blank">kimos</a>
+						<a href="http://cyclone.w15.my667.com/" target="_blank">启航</a>
+						<a target="_blank" href="https://www.google.com/adsense/v3/app?hl=zh-CN">GoogleAdsense</a>
+						<a target="_blank" href="https://code.google.com/p/goagent/">goagent</a>
+					</div>					
+					
+					
+				
+					<div id="linkstyle">
+	                    设计&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a href="http://www.zcool.com.cn/" target="_blank">站酷</a>
+						<a href="http://www.jnhouse.com/" target="_blank">房地产</a>
+						<a href="http://jn.58.com/" target="_blank">58同城</a>
+						<a href="http://jn.ganji.com/" target="_blank">赶集网</a>
+						<a href="http://jinan.baixing.com/" target="_blank">百姓网</a>
+						<a href="http://www.sf-express.com/cn/sc/" target="_blank">顺丰</a>
+					</div>
+					
+					
+					<div id="linkstyle">
+						股票&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a href="http://stock.eastmoney.com/" target="_blank">东方</a>&nbsp;
+						<a href="http://guba.eastmoney.com/" target="_blank">股吧</a>&nbsp;
+						<a href="http://finance.ifeng.com/stock/" target="_blank">凤凰</a>
+						<a href="http://www.55188.com/forumdisplay.php?fid=8&filter=0&orderby=dateline&ascdesc=DESC" target="_blank">理想论坛</a>
+						<a href="http://bbs.macd.cn/forumdisplay.php?fid=25&filter=0&orderby=dateline&ascdesc=DESC" target="_blank">MACD</a>
+						<a href="http://dtdg777.blog.163.com/" target="_blank">777</a>
+						<a href="http://live.9666.cn/111/" target="_blank">后知后觉</a>
+						<a href="http://live.9666.cn/128/" target="_blank">财赋</a>
+						<a href="http://blog.sina.com.cn/u/1283472050" target="_blank">财赋博客</a>
+					</div>
+					
+					
+					<div id="linkstyle">
+						健身&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a href="http://www.tudou.com/listplay/ublsoX8v2Lo/oSzwA3d0SIo.html" target="_blank">芭蕾</a>
+						<a target="_blank" href="http://www.tudou.com/programs/view/M6QliL7MD90/">有氧健身操</a>
+					</div>
+					
+										<div id="linkstyle">
+						户外&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a href="http://www.7k7k.com/" target="_blank">7k7k</a>
+						<a href="http://www.jnhw.cn/" target="_blank">三人行</a>
+						<a href="http://bbs.8264.com/" target="_blank">8264</a>
+
+					
+					</div>
+					
+					
+					<div id="linkstyle">
+						游戏&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a href="http://www.7k7k.com/" target="_blank">7k7k</a>
+						<a href="http://www.4399.com/special/194.htm" target="_blank">巧虎游戏</a>
+						<a href="http://www.4399.com/special/114.htm" target="_blank">芭比</a>
+						<a href="http://www.4399.com/special/236.htm" target="_blank">白雪公主</a>
+					
+					</div>
+					
+					
+
+					
+
+					
+
+					
+
+
+					
+
+					
+				</div><!--contentleft结束-->
+      </div>
+      <!以上--8--备用版-结束-->  	
+
+
+		</div><!--left结束-->
+
+
+		
+        <!--end start  v-on:mouseenter="loadWebsite(item.cate_id)"-->
+
+        <dl id="hSiteNav" class="sortable sort_category" v-cloak>
+            <dd class="hNav item"
+                v-for="(item,index) in category"
+                v-bind:data-id="item.cate_id"
+                v-bind:data-sort="item.sort"
+                v-on:mouseenter="loadWebsite(item.cate_id)"
+                v-on:mouseleave="cancelLoad()"
+
+                v-bind:class="{currentHNav:cur_cid==item.cate_id,'allow-sort':index>=1}">
+                <div class="tool" v-if="is_edit && item.is_edit ==1" >
+                    <i class="iconfont icon-shanchu" v-on:click="deleteCategory(index)"></i>
+                    <i class="iconfont icon-bianji1" v-on:click="addCategory(index)"></i>
+                </div>
+                {{item.name}}
+            </dd>
+            <dd class="hNav add-nav-btn" v-if="is_edit && is_add_btn_show">
+                <i v-on:click="addCategory('')" class="iconfont icon-icon-"></i>
+            </dd>
+        </dl>
+
+        <div class="website" v-cloak>
+            <ul v-bind:class="{edit:is_edit}" class="sortable sort_sour">
+                <li v-for="(item,index) in web_lists" v-bind:data-sort="item.sort" v-bind:data-id="item.sour_id" v-bind:class="{'allow-sort':item.is_edit==1}" class="item">
+                    <i class="iconfont icon-bianji1" v-if="is_edit && item.is_edit==1" v-on:click="addSource(index)"></i>
+                    <a target="_blank" v-bind:href="item.sour_url" >
+                        <img width="20" v-bind:src="static/picture/item.icon_file" alt="">
+                        <span class="text">{{item.name}}</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="edit-save" v-if="is_edit" v-cloak>
+            <div class="info"><i class="iconfont icon-tixing"></i>拖动可改变顺序</div>
+            <div class="info">
+                <span></span>
+                <span><a class="log-out" href="/api/sign/out"><b>退出登录</b></a></span>
+            </div>
+            <div class="btns">
+                <a href="Javascript:void(0);" v-on:click="saveSort()">保存</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="copyrightIndex">
+        <div class="bottomButton">
+            <span>©Ddduck</span>&nbsp;
+        </div>
+		
+		        <div class="bottomButton">
+            <span>迪迪鸭网络导航 Copyright 2020</span>&nbsp;
+        </div>
+
+
+    </div>
+    <div class="modal fade addSourceModal" id="addSourceModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <a href="Javascript:void(0);" data-dismiss="modal" class="close-btn">
+                    <img src="static/picture/close-btn.png" alt="">
+                </a>
+                <form action="" id="addSimpleSourForm">
+
+                    <input type="hidden" name="bs_id" value="" id="simpleBsId">
+                    <input type="hidden" value="" id="simpleSourIndex">
+
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="sour_name">名称</label>
+                            <input type="text" name="sour_name" v-model="sour_name" id="sour_name" class="form-control" placeholder="名称不能超过15个字符" />
+                        </div>
+                        <div class="form-group">
+                            <label for="sour_url">网址</label>
+                            <input type="text" name="sour_url" v-model="sour_url" id="sour_url" class="form-control" placeholder="请输入网址" />
+                        </div>
+                    </div>
+                    <div class="addSimpleSourText">为保证网站图标正常显示，网址请尽量从浏览器地址栏复制</div>
+                    <button class="addSimpleSourBtn" type="button" v-on:click="submitSource">
+                        <div class="ensoure-btn">确认</div>
+                    </button>
+                </form>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <div class="modal fade addSourceModal" id="addCategoryModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <a href="Javascript:void(0);" data-dismiss="modal" class="close-btn">
+                    <img src="static/picture/close-btn.png" alt="">
+                </a>
+                <form action="" id="addSimpleSourForm" onsubmit="return false;">
+
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="sour_name">名称</label>
+                            <input type="text" name="category_name" v-model="category_name" id="sour_name" class="form-control" placeholder="填写分类名称" />
+                        </div>
+                    </div>
+                    <div class="addSimpleSourText">为保证美观及完整显示，分类名请尽量简短</div>
+                    <button class="addSimpleSourBtn" type="button" v-on:click="submitCategory">
+                        <div class="ensoure-btn">确认</div>
+                    </button>
+                </form>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <div class="modal fade addSourceModal" id="LoginModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <a href="Javascript:void(0);" data-dismiss="modal" class="close-btn">
+                    <img src="static/picture/close-btn.png" alt="">
+                </a>
+
+                <div class="login-btn">
+                    <div class="info">请登录后使用自定义功能！</div>
+                    <div class="addSimpleSourText">登录后即可新增分类、自定义分类和自定义网址</div>
+                    <div class="btns">
+                        <a target="_blank" href="/api/sign/qq-login">QQ登录</a>
+                    </div>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+</div>
+
+<script type="text/javascript">
+window.onload=function()
+{
+
+    var search=document.getElementById('search');
+    var searchCheck = document.getElementById("searchCheck");
+    var oPromptBtn=document.getElementsByClassName('promptBtn')[0];
+    var oSearchBtn=document.getElementById('searchBtn');
+
+    var funtitle="";
+    var funlink="";
+
+    var req=new XMLHttpRequest();   //创建ajax对象
+      
+    req.open('get','./plalezi/fun.php?'+Date.parse(new Date()));
+    req.onreadystatechange=function(){
+        if(req.readyState==4 && req.status==200){
+            if(req.responseText.search("@##@")!=-1){
+                //document.write(req.responseText);
+                var funarray=req.responseText.split("@##@");
+                funtitle=funarray[0];
+                funlink=funarray[1];
+            }
+        }
+    }
+    req.send();
+
+    function initPlaceholder(){
+            if (funtitle!="" &&funlink!=""){
+                search.placeholder=funtitle;
+                oPromptBtn.style.display='block';
+                oSearchBtn.title="不填关键词试试";
+            }
+            else{
+                search.placeholder="迪迪鸭网络导航"
+            }
+            searchCheck.addEventListener("submit",function(event) {
+                var wordCheck = document.getElementsByClassName("textb")[0];
+
+                if (wordCheck.value.length <= 0) {
+                    if (funlink!=""){
+                        window.open(funlink);
+                    }
+                    else{
+                    }
+
+                    event.preventDefault()
+                    return false;
+                }
+            });
+    }
+    setTimeout(function(){initPlaceholder();},300);
+}
+</script>
+
+
+</div>
+
+<!--滑动弹出<div id="recoPage"><div class="recoBtn"></div></div>-->
+
+<script src="static/js/yii.js"></script>
+<script src="static/js/index.js" 0="frontend\assets\AppAsset"></script>
+<!-- <script type="text/javascript" src="static/js/mso.js"></script> -->
+
+</body>
+</html>

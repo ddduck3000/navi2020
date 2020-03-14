@@ -1,0 +1,85 @@
+/*»ù±¾ÐÅÏ¢*/
+body {font: 14px 'Microsoft YaHei',Helvetica,Arial,'sans-serif'; min-width: 320px; color: #333; background-color: #F9F9F9; padding-top: 52px}
+A:link {
+	COLOR: #404040;  margin:0 0 0 2px;TEXT-DECORATION: none
+}
+A:visited {
+	COLOR: #404040;  TEXT-DECORATION: none
+}
+A:active {
+	COLOR: #ff7f00;  TEXT-DECORATION: none
+}
+A:hover {
+	COLOR: #ff7f00; TEXT-DECORATION: underline
+}
+
+
+
+
+
+#contentnavi{
+	 margin:0 auto; float: left;overflow:hidden;
+	 
+
+}
+
+
+
+
+#line{
+	width:660px;height:24px; text-align: center; margin: 20px auto 0 auto;
+}
+#dotline{
+		width:660px;height:2px;background:url("../images/dotline.gif") ;margin:0 0 0 30px;overflow:hidden;float:left;
+}
+#linegray{
+	width:720px;height:24px;background:url("../images/dotlinegray.gif");display:inline;margin:20px 0 0 0;
+}
+#linkstyle{
+	width:680px;margin:10px 0 0 35px;float:left;text-align:left;
+}
+#contentleft{
+	width:50%; margin:15px 0 0 0px; float: left;overflow:hidden;
+}
+#contentright{}
+
+#block{
+	width:300px; margin:10px 30px 5px 0px;float:right;
+}
+#blockstyle{
+	width:300px;margin:10px 0 0 35px;float:left;text-align:left;
+}
+#blockdotline{
+			width:300px;height:2px;background:url("../images/dotline.gif") no-repeat;margin:0 0 0 30px;overflow:hidden;float:left;
+}
+
+
+
+
+
+
+            #tabContainer
+            {
+                  margin: 30px;
+            }
+            #line li
+            {
+                  list-style:none;
+				  float: left;
+                  width: 50px;
+                  margin: 0 3px;
+                 
+                  text-align: center;
+            }
+			#line ul
+            {
+			margin: 0 0 0 28px;
+            }
+            #tabContainer a
+            {
+                  display: block;
+            }
+            #tabContainer a.on
+            {
+                  background: pink;
+            }
