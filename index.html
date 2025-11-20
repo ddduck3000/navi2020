@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -98,7 +99,6 @@
       cursor: pointer;
     }
 
-    /* 顶部插画 + 问候区域 */
     .hero {
       display: flex;
       justify-content: space-between;
@@ -120,7 +120,6 @@
       opacity: .9;
     }
 
-    /* 搜索条 */
     .search-box {
       margin: 0 auto 14px;
       max-width: 900px;
@@ -174,7 +173,6 @@
       stroke: #111827;
     }
 
-    /* Tabs 只保留：常用 / 工作 / 数码 */
     .tabs {
       display: flex;
       justify-content: center;
@@ -207,7 +205,6 @@
       background: var(--accent);
     }
 
-    /* 2x2 面板区，每格里是 “左标题 + 右链接” 多行 */
     .panel {
       margin-top: 24px;
     }
@@ -239,42 +236,6 @@
     .custom-bookmarks-actions button:hover {
       background: var(--bg-soft);
     }
-    .custom-list {
-      margin-top: 4px;
-    }
-    .custom-item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 2px 0;
-      line-height: 1.6;
-    }
-    .custom-item a {
-      color: var(--text);
-      text-decoration: none;
-      margin-right: 8px;
-      flex: 1 1 auto;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-    .custom-item a:hover {
-      text-decoration: underline;
-    }
-    .custom-del-btn {
-      font-size: 12px;
-      padding: 1px 6px;
-      border-radius: 999px;
-      border: 1px solid var(--border-soft);
-      background: transparent;
-      cursor: pointer;
-      color: var(--muted);
-      flex: 0 0 auto;
-    }
-    .custom-del-btn:hover {
-      background: var(--bg-soft);
-      color: var(--text);
-    }
     .custom-empty {
       font-size: 12px;
       color: var(--muted);
@@ -304,7 +265,7 @@
     .section-title {
       flex: 0 0 3em;
       max-width: 4em;
-      padding-right: 4px;
+      padding-right: 14px;
       color: var(--text-muted);
       text-align: right;
     }
@@ -320,6 +281,22 @@
     .section-links a {
       white-space: nowrap;
       font-size: 14px;
+    }
+
+    /* 我的收藏：横向标签式布局 */
+    .favorites-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 12px;
+      padding: 4px 0;
+    }
+    .favorites-links a {
+      font-size: 14px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: var(--bg-panel);
+      border: 1px solid var(--border-soft);
+      white-space: nowrap;
     }
 
     .empty-hint {
@@ -361,7 +338,8 @@
       .section-row {
         font-size: 13px;
       }
-      .section-links a {
+      .section-links a,
+      .favorites-links a {
         font-size: 13px;
       }
     }
@@ -426,28 +404,51 @@
     </nav>
 
     <main>
-      <div class="panel" v-if="currentSections.length">
-        <div class="columns">
-          <div class="col" v-for="(column, cIdx) in columns" :key="cIdx">
-            <div class="section-row" v-for="section in column" :key="section.id">
-              <div class="section-title">{{ section.title }}</div>
-              <div class="section-links">
-                <a v-for="link in filteredLinks(section.links)"
-                   :key="link.url"
-                   :href="link.url"
-                   target="_blank"
-                   rel="noopener noreferrer">
-                  {{ link.name }}
-                </a>
+      <div
+        class="panel"
+        v-if="activeTab === 'favorites' ? allCustomLinks.length : currentSections.length"
+      >
+        <!-- 常用链接 / 工作网站 / 数码爱好：2×2 布局 -->
+        <template v-if="activeTab !== 'favorites'">
+          <div class="columns">
+            <div class="col" v-for="(column, cIdx) in columns" :key="cIdx">
+              <div class="section-row" v-for="section in column" :key="section.id">
+                <div class="section-title">{{ section.title }}</div>
+                <div class="section-links">
+                  <a v-for="link in section.links"
+                     :key="link.url"
+                     :href="link.url"
+                     target="_blank"
+                     rel="noopener noreferrer">
+                    {{ link.name }}
+                  </a>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        </template>
+
+        <!-- 我的收藏：单大块，横向标签式布局 -->
+        <template v-else>
+          <div class="col" style="max-width: 100%; margin: 0 auto;">
+            <div class="favorites-links">
+              <a v-for="link in allCustomLinks"
+                 :key="link.id || link.url"
+                 :href="link.url"
+                 target="_blank"
+                 rel="noopener noreferrer">
+                {{ link.name }}
+              </a>
+            </div>
+          </div>
+        </template>
       </div>
+
       <div class="empty-hint" v-else>
         没找到和「{{ keyword }}」相关的链接，可以尝试更短的关键词。
       </div>
     </main>
+
     <section class="custom-bookmarks">
       <div class="custom-bookmarks-header">
         <div class="custom-bookmarks-title">我的收藏（云端同步）</div>
@@ -455,14 +456,8 @@
           <button type="button" @click="addCustomLink()">＋ 添加当前标签链接</button>
         </div>
       </div>
-      <div class="custom-list" v-if="customLinksForTab.length">
-        <div class="custom-item" v-for="link in customLinksForTab" :key="link.id">
-          <a :href="link.url" target="_blank" rel="noopener noreferrer">{{ link.name }}</a>
-          <button type="button" class="custom-del-btn" @click.prevent="removeCustomLink(activeTab, link.id)">删</button>
-        </div>
-      </div>
-      <div class="custom-empty" v-else>
-        当前标签下暂无自定义收藏。
+      <div class="custom-empty">
+        已收藏的站点会在上方「我的收藏」标签页中显示。
       </div>
     </section>
   </div>
@@ -471,7 +466,6 @@
     <div>© {{ new Date().getFullYear() }} Ddduck · GitHub Pages</div>
   </footer>
 </div>
-
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.prod.js"></script>
@@ -493,753 +487,90 @@
           { id: 'google', name: 'Google', base: 'https://www.google.com/search?q=' }
         ],
         engineIndex: 0,
-        // 只保留 三个 tab
         tabs: [
-          { id: 'common',  label: '常用' },
-          { id: 'work',    label: '工作' },
-          { id: 'digital', label: '数码' }
+          { id: 'common',    label: '常用链接' },
+          { id: 'work',      label: '工作网站' },
+          { id: 'digital',   label: '数码爱好' },
+          { id: 'favorites', label: '我的收藏' }
         ],
-        // 只保留 common / work / digital 三个大类
-                customLinks: {
+        customLinks: {
           common: [],
           work: [],
           digital: []
         },
-sectionsByTab: {
+        allCustomLinks: [],
+        sectionsByTab: {
           common: [
-            {
-              "id": "common_1",
-              "title": "办公",
-              "links": [
-                { "name": "科学院", "url": "http://www.sdas.org/" },
-                { "name": "材料所", "url": "http://www.sdxcl.com/" },
-                { "name": "126", "url": "http://www.126.com/" },
-                { "name": "院邮箱", "url": "http://mail.sdas.org/" },
-                { "name": "校邮箱", "url": "https://mail.qlu.edu.cn/" },
-                { "name": "山艺", "url": "http://www.sdca.edu.cn/" },
-                { "name": "招办", "url": "http://zsbgs.sdca.edu.cn/" },
-                { "name": "教育厅", "url": "http://edu.shandong.gov.cn/" },
-                { "name": "招考院", "url": "http://www.sdzk.cn/" }
-              ]
-            },
-            {
-              "id": "common_2",
-              "title": "AI",
-              "links": [
-                { "name": "Chatgpt", "url": "https://chat.openai.com/" },
-                { "name": "Deepseek", "url": "https://www.deepseek.com/" },
-                { "name": "Grok", "url": "https://grok.com/?referrer=grok" },
-                { "name": "Perplexity", "url": "https://www.perplexity.ai/" },
-                { "name": "Claude", "url": "https://claude.ai/" },
-                { "name": "Gemini", "url": "https://gemini.google.com/app" },
-                { "name": "GoolgeAI", "url": "https://aistudio.google.com/prompts/new_chat" }
-              ]
-            },
-            {
-              "id": "common_3",
-              "title": "课题",
-              "links": [
-                { "name": "科技厅", "url": "http://kjt.shandong.gov.cn/" },
-                { "name": "云平台", "url": "http://cloud.kjt.shandong.gov.cn/" },
-                { "name": "教育厅", "url": "http://edu.shandong.gov.cn/" },
-                { "name": "高校平台", "url": "http://221.214.56.13:8089/" },
-                { "name": "科技局", "url": "http://www.jnsti.gov.cn/" },
-                { "name": "院办公", "url": "http://192.168.2.13:8081/login.do" },
-                { "name": "科研站", "url": "http://218.57.145.26/servlet/scsc" },
-                { "name": "财务", "url": "http://192.168.2.8:8080/" }
-              ]
-            },
-            {
-              "id": "common_4",
-              "title": "检索",
-              "links": [
-                { "name": "HiQQ", "url": "http://nav.hiqq.com.cn/twy/" },
-                { "name": "Google", "url": "http://www.google.com" },
-                { "name": "学术", "url": "https://scholar.google.com/?hl=zh-CN" },
-                { "name": "学术镜像", "url": "http://ac.scmor.com/" },
-                { "name": "glgoo", "url": "https://xue.glgoo.org/" },
-                { "name": "影响因子", "url": "https://www.letpub.com.cn/index.php?page=journalapp" }
-              ]
-            },
-            {
-              "id": "common_5",
-              "title": "学术",
-              "links": [
-                { "name": "知网", "url": "https://www.cnki.net/" },
-                { "name": "学术", "url": "https://scholar.google.com/?hl=zh-CN" },
-                { "name": "SCI-hub", "url": "https://scihub.wikicn.top/" },
-                { "name": "喵咪", "url": "https://lunwen.im/" },
-                { "name": "dimensions", "url": "https://app.dimensions.ai/discover/publication" },
-                { "name": "WOS", "url": "http://apps.webofknowledge.com/WOS_GeneralSearch_input.do?product=WOS&search_mode=GeneralSearch&SID=E2EXryBM4X1JaPveLld&preferencesSaved=" },
-                { "name": "oalib", "url": "http://www.oalib.com/" },
-                { "name": "百度文库", "url": "http://wenku.baidu.com/" }
-              ]
-            },
-            {
-              "id": "common_6",
-              "title": "工大",
-              "links": [
-                { "name": "工大", "url": "http://www.qlu.edu.cn/" },
-                { "name": "导航", "url": "https://www.qlu.edu.cn/5141/list.htm" },
-                { "name": "工大OA", "url": "http://oa.qlu.edu.cn/" },
-                { "name": "计财处", "url": "http://cwyth.qlu.edu.cn:8020/GXCWYTH" },
-                { "name": "工大OS", "url": "http://os.qlu.edu.cn/" },
-                { "name": "智慧校园", "url": "http://i.qlu.edu.cn/home" },
-                { "name": "导师", "url": "http://210.44.144.43/login.html" },
-                { "name": "一号通", "url": "http://210.44.144.205:8071/app/index.action" }
-              ]
-            },
-            {
-              "id": "common_7",
-              "title": "新闻",
-              "links": [
-                { "name": "百度", "url": "http://www.baidu.com/" },
-                { "name": "凤凰网", "url": "http://www.ifeng.com/" },
-                { "name": "腾讯", "url": "http://www.qq.com/" },
-                { "name": "新浪", "url": "http://www.sina.com.cn" },
-                { "name": "搜狐", "url": "http://www.sohu.com/" },
-                { "name": "新浪体育", "url": "http://sports.sina.com.cn" },
-                { "name": "强国", "url": "https://www.xuexi.cn/" }
-              ]
-            },
-            {
-              "id": "common_8",
-              "title": "二手",
-              "links": [
-                { "name": "熊坛", "url": "http://www.sd001.com/forum.php?mod=forumdisplay&fid=251&filter=author&orderby=dateline" },
-                { "name": "家电", "url": "http://www.jd-bbs.com/forum.php?mod=forumdisplay&fid=97&filter=author&orderby=dateline" },
-                { "name": "太平洋", "url": "http://itbbs.pconline.com.cn/es/type_g663eg793ag5668-45.html" },
-                { "name": "PCinlife二手", "url": "http://we.poppur.com/forum-298-1.html" },
-                { "name": "一传手", "url": "http://my.poppur.com/home.php?mod=space&uid=513644&do=thread&view=me&from=space" },
-                { "name": "显示器", "url": "http://s.2.taobao.com/list/list.htm?start=380&end=550&cpp=true&st_edtime=1&ist=1&catid=50100426&q=" },
-                { "name": "chiphell", "url": "http://www.chiphell.com/forum-26-1.html" },
-                { "name": "图吧", "url": "http://tieba.baidu.com/f?kw=%E5%9B%BE%E6%8B%89%E4%B8%81&ie=utf-8" }
-              ]
-            },
-            {
-              "id": "common_9",
-              "title": "商城",
-              "links": [
-                { "name": "淘宝", "url": "http://www.taobao.com/" },
-                { "name": "天猫", "url": "http://www.tmall.com/" },
-                { "name": "京东", "url": "http://www.jd.com/" },
-                { "name": "苏宁", "url": "http://www.suning.com/" },
-                { "name": "亚马逊", "url": "http://www.amazon.cn/" },
-                { "name": "新蛋", "url": "http://www.newegg.com.cn/" },
-                { "name": "当当", "url": "http://www.dangdang.com/" },
-                { "name": "一号店", "url": "http://www.yihaodian.com" },
-                { "name": "土猫", "url": "http://www.toolmall.com/" },
-                { "name": "优个网", "url": "http://www.yoger.com.cn/" }
-              ]
-            },
-            {
-              "id": "common_10",
-              "title": "荐购",
-              "links": [
-                { "name": "什么值", "url": "http://www.smzdm.com/" },
-                { "name": "发现", "url": "http://fx.smzdm.com/" },
-                { "name": "慢慢买", "url": "http://cu.manmanbuy.com/" },
-                { "name": "没得比", "url": "http://www.meidebi.com/" },
-                { "name": "赚客", "url": "http://www.zuanke8.com/forum-15-1.html" },
-                { "name": "转运中国", "url": "https://www.uszcn.com/" },
-                { "name": "海带宝", "url": "http://www.haidaibao.com/" },
-                { "name": "酱吧", "url": "http://tieba.baidu.com/f?kw=%E9%85%B1%E9%A6%99%E7%99%BD%E9%85%92" }
-              ]
-            },
-            {
-              "id": "common_11",
-              "title": "电影",
-              "links": [
-                { "name": "豆瓣", "url": "http://movie.douban.com/" },
-                { "name": "爱笑聚", "url": "https://www.yssfwang.com/" },
-                { "name": "天堂", "url": "https://www.xl720.com/" },
-                { "name": "摆渡", "url": "https://weibo.com/baiduSUB?from=profile&wvr=6" },
-                { "name": "远鉴", "url": "https://www.weibo.com/u/5522387632?refer_flag=1005055013_" },
-                { "name": "分派", "url": "http://ifenpaidy.com/blog/5cff587fbb34e951afdc782e" },
-                { "name": "新6v", "url": "https://www.66s.cc/" },
-                { "name": "6vhao", "url": "http://www.6vhao.tv/" },
-                { "name": "泥视频", "url": "https://www.nivod.cc/" }
-              ]
-            },
-            {
-              "id": "common_12",
-              "title": "视频",
-              "links": [
-                { "name": "b站", "url": "https://www.bilibili.com/" },
-                { "name": "光影", "url": "https://etdown.net/" },
-                { "name": "音范斯", "url": "https://www.yinfans.me/" },
-                { "name": "电影港", "url": "https://www.dygang.cc/" },
-                { "name": "btbtt", "url": "https://www.1lou.pro/" },
-                { "name": "天堂", "url": "https://www.dygod.net/" },
-                { "name": "光影", "url": "https://etdown.net/" }
-              ]
-            },
-            {
-              "id": "common_13",
-              "title": "电玩",
-              "links": [
-                { "name": "91tvg", "url": "https://www.91tvg.com/" },
-                { "name": "破解吧", "url": "https://tieba.baidu.com/f?kw=switch%C6%C6%BD%E2&fr=ala0&tpl=5" },
-                { "name": "多玩", "url": "http://bbs.duowan.com/forum-2748-1.html" },
-                { "name": "爱ps4", "url": "http://loveps4.com/" },
-                { "name": "madloader", "url": "https://madloader.com/nintendo-switch/switch-eshop-nsp/" },
-                { "name": "switch520", "url": "https://www.520switch.com/" },
-                { "name": "gamer520", "url": "https://www.gamer520.com/" },
-                { "name": "掌中宝", "url": "http://www.eshop-switch.com/game.html" }
-              ]
-            },
-            {
-              "id": "common_14",
-              "title": "生活",
-              "links": [
-                { "name": "小红书", "url": "https://www.xiaohongshu.com/explore" },
-                { "name": "抖音", "url": "https://www.douyin.com/" },
-                { "name": "公积金", "url": "http://gjj.jinan.gov.cn/" },
-                { "name": "汉兰达", "url": "https://club.autohome.com.cn/bbs/forum-c-771-1.html#pvareaid=6826792" },
-                { "name": "爱卡汽车", "url": "http://www.xcar.com.cn/bbs/forumdisplay.php?fid=478" },
-                { "name": "财赋", "url": "http://live.new-rand.cn/128/" },
-                { "name": "财赋博客", "url": "http://blog.sina.com.cn/u/1283472050" },
-                { "name": "东方", "url": "http://stock.eastmoney.com/" }
-              ]
-            },
-            {
-              "id": "common_15",
-              "title": "自驾",
-              "links": [
-                { "name": "贴吧", "url": "https://tieba.baidu.com/f?kw=%E8%87%AA%E9%A9%BE" },
-                { "name": "天涯", "url": "http://bbs.tianya.cn/list-1082-1.shtml" },
-                { "name": "汽车之家", "url": "https://club.autohome.com.cn/bbs/forum-o-200042-1.html" },
-                { "name": "8264", "url": "https://bbs.8264.com/forum-66-1.html" },
-                { "name": "三人行", "url": "http://www.tubushandong.com/" },
-                { "name": "追风", "url": "http://www.51ttly.com/" }
-              ]
-            },
-            {
-              "id": "common_16",
-              "title": "外网",
-              "links": [
-                { "name": "节点", "url": "https://sspool.herokuapp.com/" },
-                { "name": "youtube", "url": "https://www.youtube.com/" },
-                { "name": "twitter", "url": "https://twitter.com/home" },
-                { "name": "facebook", "url": "https://www.facebook.com/" },
-                { "name": "github", "url": "https://github.com/ddduck3000/navi2020/" },
-                { "name": "小米路由", "url": "www.miwifi.com" },
-                { "name": "gcp", "url": "https://cloud.google.com/" }
-              ]
-            },
-            {
-              "id": "common_17",
-              "title": "建站",
-              "links": [
-                { "name": "万网国际", "url": "https://www.alibabacloud.com/" },
-                { "name": "西数", "url": "http://www.west263.com/" },
-                { "name": "华夏", "url": "https://www.sudu.cn/" },
-                { "name": "godaddy", "url": "http://www.godaddy.com" },
-                { "name": "namesilo", "url": "https://www.namesilo.com" },
-                { "name": "dnspod", "url": "https://www.dnspod.cn/" },
-                { "name": "山东材料", "url": "http://www.sdclxkq.org/" }
-              ]
-            },
-            {
-              "id": "common_18",
-              "title": "设计",
-              "links": [
-                { "name": "站酷", "url": "http://www.zcool.com.cn/" },
-                { "name": "懒人", "url": "http://www.lanrentuku.com/vector/background/" },
-                { "name": "千图", "url": "http://www.58pic.com/" },
-                { "name": "我图", "url": "http://www.ooopic.com/" },
-                { "name": "包图", "url": "http://888pic.com/" },
-                { "name": "模板之家", "url": "http://www.cssmoban.com/" },
-                { "name": "设计导航", "url": "http://hao.shejidaren.com/index.html" },
-                { "name": "百姓", "url": "http://jinan.baixing.com/" },
-                { "name": "顺丰", "url": "http://www.sf-express.com/cn/sc/" }
-              ]
-            },
-            {
-              "id": "common_19",
-              "title": "教育",
-              "links": [
-                { "name": "作业", "url": "http://blog.sina.com.cn/ddduck3000" },
-                { "name": "安全教育", "url": "https://jinan.xueanquan.com/" },
-                { "name": "第2课堂", "url": "https://www.2-class.com/" },
-                { "name": "人人通", "url": "http://rrt.jndjg.cn/" },
-                { "name": "组卷", "url": "https://www.zujuan.com/" },
-                { "name": "二一", "url": "https://zujuan.21cnjy.com/" },
-                { "name": "圈点", "url": "http://cooco.net.cn/" }
-              ]
-            },
-            {
-              "id": "common_20",
-              "title": "数码",
-              "links": [
-                { "name": "anywlan", "url": "http://forum.anywlan.com/" },
-                { "name": "恩山", "url": "http://www.right.com.cn/" },
-                { "name": "Chatgpt", "url": "https://chat.openai.com/" },
-                { "name": "NotionAI", "url": "https://www.notion.so/product/ai" },
-                { "name": "DeepSeek", "url": "https://www.deepseek.com/" }
-              ]
-            }
+            {"id":"common_1","title":"办公","links":[{"name":"科学院","url":"http://www.sdas.org/"},{"name":"材料所","url":"http://www.sdxcl.com/"},{"name":"126","url":"http://www.126.com/"},{"name":"院邮箱","url":"http://mail.sdas.org/"},{"name":"校邮箱","url":"https://mail.qlu.edu.cn/"},{"name":"山艺","url":"http://www.sdca.edu.cn/"},{"name":"招办","url":"http://zsbgs.sdca.edu.cn/"},{"name":"教育厅","url":"http://edu.shandong.gov.cn/"},{"name":"招考院","url":"http://www.sdzk.cn/"}]},
+            {"id":"common_2","title":"AI","links":[{"name":"Chatgpt","url":"https://chat.openai.com/"},{"name":"Deepseek","url":"https://www.deepseek.com/"},{"name":"Grok","url":"https://grok.com/?referrer=grok"},{"name":"Perplexity","url":"https://www.perplexity.ai/"},{"name":"Claude","url":"https://claude.ai/"},{"name":"Gemini","url":"https://gemini.google.com/app"},{"name":"GoolgeAI","url":"https://aistudio.google.com/prompts/new_chat"}]},
+            {"id":"common_3","title":"课题","links":[{"name":"科技厅","url":"http://kjt.shandong.gov.cn/"},{"name":"云平台","url":"http://cloud.kjt.shandong.gov.cn/"},{"name":"教育厅","url":"http://edu.shandong.gov.cn/"},{"name":"高校平台","url":"http://221.214.56.13:8089/"},{"name":"科技局","url":"http://www.jnsti.gov.cn/"},{"name":"院办公","url":"http://192.168.2.13:8081/login.do"},{"name":"科研站","url":"http://218.57.145.26/servlet/scsc"},{"name":"财务","url":"http://192.168.2.8:8080/"}]},
+            {"id":"common_4","title":"检索","links":[{"name":"HiQQ","url":"http://nav.hiqq.com.cn/twy/"},{"name":"Google","url":"http://www.google.com"},{"name":"学术","url":"https://scholar.google.com/?hl=zh-CN"},{"name":"学术镜像","url":"http://ac.scmor.com/"},{"name":"glgoo","url":"https://xue.glgoo.org/"},{"name":"影响因子","url":"https://www.letpub.com.cn/index.php?page=journalapp"}]},
+            {"id":"common_5","title":"学术","links":[{"name":"知网","url":"https://www.cnki.net/"},{"name":"学术","url":"https://scholar.google.com/?hl=zh-CN"},{"name":"SCI-hub","url":"https://scihub.wikicn.top/"},{"name":"喵咪","url":"https://lunwen.im/"},{"name":"dimensions","url":"https://app.dimensions.ai/discover/publication"},{"name":"WOS","url":"http://apps.webofknowledge.com/WOS_GeneralSearch_input.do?product=WOS&search_mode=GeneralSearch&SID=E2EXryBM4X1JaPveLld&preferencesSaved="},{"name":"oalib","url":"http://www.oalib.com/"},{"name":"百度文库","url":"http://wenku.baidu.com/"}]},
+            {"id":"common_6","title":"工大","links":[{"name":"工大","url":"http://www.qlu.edu.cn/"},{"name":"导航","url":"https://www.qlu.edu.cn/5141/list.htm"},{"name":"工大OA","url":"http://oa.qlu.edu.cn/"},{"name":"计财处","url":"http://cwyth.qlu.edu.cn:8020/GXCWYTH"},{"name":"工大OS","url":"http://os.qlu.edu.cn/"},{"name":"智慧校园","url":"http://i.qlu.edu.cn/home"},{"name":"导师","url":"http://210.44.144.43/login.html"},{"name":"一号通","url":"http://210.44.144.205:8071/app/index.action"}]},
+            {"id":"common_7","title":"新闻","links":[{"name":"百度","url":"http://www.baidu.com/"},{"name":"凤凰网","url":"http://www.ifeng.com/"},{"name":"腾讯","url":"http://www.qq.com/"},{"name":"新浪","url":"http://www.sina.com.cn"},{"name":"搜狐","url":"http://www.sohu.com/"},{"name":"新浪体育","url":"http://sports.sina.com.cn"},{"name":"强国","url":"https://www.xuexi.cn/"}]},
+            {"id":"common_8","title":"二手","links":[{"name":"熊坛","url":"http://www.sd001.com/forum.php?mod=forumdisplay&fid=251&filter=author&orderby=dateline"},{"name":"家电","url":"http://www.jd-bbs.com/forum.php?mod=forumdisplay&fid=97&filter=author&orderby=dateline"},{"name":"太平洋","url":"http://itbbs.pconline.com.cn/es/type_g663eg793ag5668-45.html"},{"name":"PCinlife二手","url":"http://we.poppur.com/forum-298-1.html"},{"name":"一传手","url":"http://my.poppur.com/home.php?mod=space&uid=513644&do=thread&view=me&from=space"},{"name":"显示器","url":"http://s.2.taobao.com/list/list.htm?start=380&end=550&cpp=true&st_edtime=1&ist=1&catid=50100426&q="},{"name":"chiphell","url":"http://www.chiphell.com/forum-26-1.html"},{"name":"图吧","url":"http://tieba.baidu.com/f?kw=%E5%9B%BE%E6%8B%89%E4%B8%81&ie=utf-8"}]},
+            {"id":"common_9","title":"商城","links":[{"name":"淘宝","url":"http://www.taobao.com/"},{"name":"天猫","url":"http://www.tmall.com/"},{"name":"京东","url":"http://www.jd.com/"},{"name":"苏宁","url":"http://www.suning.com/"},{"name":"亚马逊","url":"http://www.amazon.cn/"},{"name":"新蛋","url":"http://www.newegg.com.cn/"},{"name":"当当","url":"http://www.dangdang.com/"},{"name":"一号店","url":"http://www.yihaodian.com"},{"name":"土猫","url":"http://www.toolmall.com/"},{"name":"优个网","url":"http://www.yoger.com.cn/"}]},
+            {"id":"common_10","title":"荐购","links":[{"name":"什么值","url":"http://www.smzdm.com/"},{"name":"发现","url":"http://fx.smzdm.com/"},{"name":"慢慢买","url":"http://cu.manmanbuy.com/"},{"name":"没得比","url":"http://www.meidebi.com/"},{"name":"赚客","url":"http://www.zuanke8.com/forum-15-1.html"},{"name":"转运中国","url":"https://www.uszcn.com/"},{"name":"海带宝","url":"http://www.haidaibao.com/"},{"name":"酱吧","url":"http://tieba.baidu.com/f?kw=%E9%85%B1%E9%A6%99%E7%99%BD%E9%85%92"}]},
+            {"id":"common_11","title":"电影","links":[{"name":"豆瓣","url":"http://movie.douban.com/"},{"name":"爱笑聚","url":"https://www.yssfwang.com/"},{"name":"天堂","url":"https://www.xl720.com/"},{"name":"摆渡","url":"https://weibo.com/baiduSUB?from=profile&wvr=6"},{"name":"远鉴","url":"https://www.weibo.com/u/5522387632?refer_flag=1005055013_"},{"name":"分派","url":"http://ifenpaidy.com/blog/5cff587fbb34e951afdc782e"},{"name":"新6v","url":"https://www.66s.cc/"},{"name":"6vhao","url":"http://www.6vhao.tv/"},{"name":"泥视频","url":"https://www.nivod.cc/"}]},
+            {"id":"common_12","title":"视频","links":[{"name":"b站","url":"https://www.bilibili.com/"},{"name":"光影","url":"https://etdown.net/"},{"name":"音范斯","url":"https://www.yinfans.me/"},{"name":"电影港","url":"https://www.dygang.cc/"},{"name":"btbtt","url":"https://www.1lou.pro/"},{"name":"天堂","url":"https://www.dygod.net/"},{"name":"光影","url":"https://etdown.net/"}]},
+            {"id":"common_13","title":"电玩","links":[{"name":"91tvg","url":"https://www.91tvg.com/"},{"name":"破解吧","url":"https://tieba.baidu.com/f?kw=switch%C6%C6%BD%E2&fr=ala0&tpl=5"},{"name":"多玩","url":"http://bbs.duowan.com/forum-2748-1.html"},{"name":"爱ps4","url":"http://loveps4.com/"},{"name":"madloader","url":"https://madloader.com/nintendo-switch/switch-eshop-nsp/"},{"name":"switch520","url":"https://www.520switch.com/"},{"name":"gamer520","url":"https://www.gamer520.com/"},{"name":"掌中宝","url":"http://www.eshop-switch.com/game.html"}]},
+            {"id":"common_14","title":"生活","links":[{"name":"小红书","url":"https://www.xiaohongshu.com/explore"},{"name":"抖音","url":"https://www.douyin.com/"},{"name":"公积金","url":"http://gjj.jinan.gov.cn/"},{"name":"汉兰达","url":"https://club.autohome.com.cn/bbs/forum-c-771-1.html#pvareaid=6826792"},{"name":"爱卡汽车","url":"http://www.xcar.com.cn/bbs/forumdisplay.php?fid=478"},{"name":"财赋","url":"http://live.new-rand.cn/128/"},{"name":"财赋博客","url":"http://blog.sina.com.cn/u/1283472050"},{"name":"东方","url":"http://stock.eastmoney.com/"}]},
+            {"id":"common_15","title":"自驾","links":[{"name":"贴吧","url":"https://tieba.baidu.com/f?kw=%E8%87%AA%E9%A9%BE"},{"name":"天涯","url":"http://bbs.tianya.cn/list-1082-1.shtml"},{"name":"汽车之家","url":"https://club.autohome.com.cn/bbs/forum-o-200042-1.html"},{"name":"8264","url":"https://bbs.8264.com/forum-66-1.html"},{"name":"三人行","url":"http://www.tubushandong.com/"},{"name":"追风","url":"http://www.51ttly.com/"}]},
+            {"id":"common_16","title":"外网","links":[{"name":"节点","url":"https://sspool.herokuapp.com/"},{"name":"youtube","url":"https://www.youtube.com/"},{"name":"twitter","url":"https://twitter.com/home"},{"name":"facebook","url":"https://www.facebook.com/"},{"name":"github","url":"https://github.com/ddduck3000/navi2020/"},{"name":"小米路由","url":"www.miwifi.com"},{"name":"gcp","url":"https://cloud.google.com/"}]},
+            {"id":"common_17","title":"建站","links":[{"name":"万网国际","url":"https://www.alibabacloud.com/"},{"name":"西数","url":"http://www.west263.com/"},{"name":"华夏","url":"https://www.sudu.cn/"},{"name":"godaddy","url":"http://www.godaddy.com"},{"name":"namesilo","url":"https://www.namesilo.com"},{"name":"dnspod","url":"https://www.dnspod.cn/"},{"name":"山东材料","url":"http://www.sdclxkq.org/"}]},
+            {"id":"common_18","title":"设计","links":[{"name":"站酷","url":"http://www.zcool.com.cn/"},{"name":"懒人","url":"http://www.lanrentuku.com/vector/background/"},{"name":"千图","url":"http://www.58pic.com/"},{"name":"我图","url":"http://www.ooopic.com/"},{"name":"包图","url":"http://888pic.com/"},{"name":"模板之家","url":"http://www.cssmoban.com/"},{"name":"设计导航","url":"http://hao.shejidaren.com/index.html"},{"name":"百姓","url":"http://jinan.baixing.com/"},{"name":"顺丰","url":"http://www.sf-express.com/cn/sc/"}]},
+            {"id":"common_19","title":"教育","links":[{"name":"作业","url":"http://blog.sina.com.cn/ddduck3000"},{"name":"安全教育","url":"https://jinan.xueanquan.com/"},{"name":"第2课堂","url":"https://www.2-class.com/"},{"name":"人人通","url":"http://rrt.jndjg.cn/"},{"name":"组卷","url":"https://www.zujuan.com/"},{"name":"二一","url":"https://zujuan.21cnjy.com/"},{"name":"圈点","url":"http://cooco.net.cn/"}]},
+            {"id":"common_20","title":"数码","links":[{"name":"anywlan","url":"http://forum.anywlan.com/"},{"name":"恩山","url":"http://www.right.com.cn/"},{"name":"Chatgpt","url":"https://chat.openai.com/"},{"name":"NotionAI","url":"https://www.notion.so/product/ai"},{"name":"DeepSeek","url":"https://www.deepseek.com/"}]}
           ],
-
           work: [
-            {
-              "id": "work_1",
-              "title": "国家基金",
-              "links": [
-                { "name": "基金委", "url": "http://www.nsfc.gov.cn" },
-                { "name": "申报系统", "url": "https://grants.nsfc.gov.cn/pmpweb/login" },
-                { "name": "共享服务", "url": "http://npd.nsfc.gov.cn/" },
-                { "name": "丁香园", "url": "http://nsfc.biomart.cn/" }
-              ]
-            },
-            {
-              "id": "work_2",
-              "title": "省市课题",
-              "links": [
-                { "name": "省科技厅", "url": "http://kjt.shandong.gov.cn/" },
-                { "name": "省基金委", "url": "http://www.sdnsf.gov.cn/" },
-                { "name": "省云平台", "url": "http://cloud.kjt.shandong.gov.cn/" },
-                { "name": "高校平台", "url": "http://221.214.56.13:8089/" },
-                { "name": "市云平台", "url": "http://221.214.94.50:81/nsf/young/index.htm" },
-                { "name": "市科技局", "url": "http://www.jnsti.gov.cn/" },
-                { "name": "市信息所", "url": "http://www.jnsti.net/" },
-                { "name": "市云平台", "url": "http://119.164.252.194/a/login" },
-                { "name": "教育厅", "url": "http://edu.shandong.gov.cn/" }
-              ]
-            },
-            {
-              "id": "work_3",
-              "title": "杂志投稿",
-              "links": [
-                { "name": "影响因子", "url": "http://www.letpub.com.cn/index.php?page=journalapp" },
-                { "name": "CCCG-16", "url": "http://www.ccg.ustc.edu.cn/" },
-                { "name": "CRT", "url": "http://onlinelibrary.wiley.com/journal/10.1002/(ISSN)1521-4079" },
-                { "name": "CRT山大", "url": "http://123.233.119.36/iras51/rewriter/WILEY/http/nmkhmdkhaq-qx9vhkdx9bnl/journal/10.1002/(ISSN)1521-4079" },
-                { "name": "MRI", "url": "http://www.editorialmanager.com/mri/" },
-                { "name": "国陶", "url": "https://www.sciencedirect.com/journal/ceramics-international" },
-                { "name": "CGD", "url": "https://pubs.acs.org/journal/cgdefu" }
-              ]
-            },
-            {
-              "id": "work_4",
-              "title": "科研软件",
-              "links": [
-                { "name": "小木虫", "url": "http://muchong.com/bbs/index.php" },
-                { "name": "labview", "url": "http://bbs.elecfans.com/zhuti_labview_1.html" },
-                { "name": "绘图", "url": "https://www.draw.io/" },
-                { "name": "WebPlotDigitizer", "url": "https://automeris.io/" }
-              ]
-            },
-            {
-              "id": "work_5",
-              "title": "文献检索",
-              "links": [
-                { "name": "google学术", "url": "http://scholar.google.com/" },
-                { "name": "山大校外", "url": "http://123.233.119.36/" },
-                { "name": "北工大", "url": "http://lib.bjut.edu.cn/shujuku.html " },
-                { "name": "ResearchGate", "url": "https://www.researchgate.net" },
-                { "name": "科研动力", "url": "https://www.howsci.com/" },
-                { "name": "学术网", "url": "http://www.scholarnet.cn/publication/" },
-                { "name": "iask", "url": "http://ishare.iask.sina.com.cn/" },
-                { "name": "零点", "url": "http://www.soudoc.com/bbs/" },
-                { "name": "博研", "url": "http://bbs.myboyan.com/" }
-              ]
-            },
-            {
-              "id": "work_6",
-              "title": "电子书籍",
-              "links": [
-                { "name": "z-library", "url": "https://z-library.sk/" },
-                { "name": "z-twitter", "url": "https://x.com/z_lib_official" },
-                { "name": "libgen", "url": "https://libgen.mx/" },
-                { "name": "libgenesis", "url": "https://libgenesis.net/" },
-                { "name": "Anna", "url": "https://annas-archive.se/" }
-              ]
-            },
-            {
-              "id": "work_7",
-              "title": "收录分区",
-              "links": [
-                { "name": "SCI检索", "url": "http://123.233.119.36/iras51/rewriter/ISI/" },
-                { "name": "EI检索", "url": "http://123.233.119.36/iras51/rewriter/EI/" },
-                { "name": "影响因子", "url": "http://www.medsci.cn/sci/?action=search" }
-              ]
-            },
-            {
-              "id": "work_8",
-              "title": "材料采购",
-              "links": [
-                { "name": "天眼查", "url": "http://www.tianyancha.com/" },
-                { "name": "企查查", "url": "http://www.qichacha.com/" },
-                { "name": "国药集团", "url": "http://www.reagent.com.cn:666/ScrcBackGroup/reagent/newindex.jsp" },
-                { "name": "政采超市", "url": "http://portal.sdzfcg.gov.cn/" }
-              ]
-            },
-            {
-              "id": "work_9",
-              "title": "在线翻译",
-              "links": [
-                { "name": "CNKI", "url": "http://dict.cnki.net/dict.aspx" },
-                { "name": "郑州大学", "url": "http://www3.zzu.edu.cn/zzjdict/" },
-                { "name": "海词", "url": "http://edu.dict.cn/" },
-                { "name": "爱词霸", "url": "http://www.iciba.com/" },
-                { "name": "词酷", "url": "http://www.nciku.com/" }
-              ]
-            },
-            {
-              "id": "work_10",
-              "title": "在线工具",
-              "links": [
-                { "name": "WebPlotDigitizer", "url": "https://apps.automeris.io/wpd/index.zh_CN.html" },
-                { "name": "draw.io", "url": "https://www.draw.io/" },
-                { "name": "海词", "url": "http://edu.dict.cn/" },
-                { "name": "爱词霸", "url": "http://www.iciba.com/" },
-                { "name": "词酷", "url": "http://www.nciku.com/" },
-                { "name": "youtube下载", "url": "https://youtubeplaylist.cc/" }
-              ]
-            },
-            {
-              "id": "work_11",
-              "title": "专利相关",
-              "links": [
-                { "name": "产权局", "url": "https://www.cnipa.gov.cn/" },
-                { "name": "专利检索", "url": "http://epub.cnipa.gov.cn/" },
-                { "name": "佰腾", "url": "http://www.patexplorer.com/" },
-                { "name": "soopat", "url": "http://www.soopat.com/" },
-                { "name": "专利下载", "url": "http://www.drugfuture.com/cnpat/cn_patent.asp" }
-              ]
-            },
-            {
-              "id": "work_12",
-              "title": "NTT公司",
-              "links": [
-                { "name": "NTT", "url": "https://www.ntt-review.jp/" },
-                { "name": "日经", "url": "http://china.nikkeibp.com.cn/" },
-                { "name": "NTT", "url": "http://www.ntt.co.jp/index_e.html" },
-                { "name": "NTT-AT", "url": "http://www.ntt-at.com/" },
-                { "name": "BRL", "url": "http://www.brl.ntt.co.jp/e/" },
-                { "name": "PHlab", "url": "http://www.phlab.ecl.ntt.co.jp/eng/" },
-                { "name": "SClab", "url": "http://www.ntt.co.jp/sclab/index_e.html" }
-              ]
-            },
-            {
-              "id": "work_13",
-              "title": "文献阅读",
-              "links": [
-                { "name": "scihub", "url": "https://www.sci-hub.pub/" },
-                { "name": "libgen", "url": "https://librarygenesis.net/zh/" },
-                { "name": "Freepdf", "url": "https://www.freefullpdf.com/" },
-                { "name": "Digest", "url": "https://www.paperdigest.org/" },
-                { "name": "Saurus", "url": "https://www.thesaurus.com/" },
-                { "name": "Connect", "url": "https://www.connectedpapers.com/" }
-              ]
-            },
-            {
-              "id": "work_14",
-              "title": "在线记事",
-              "links": [
-                { "name": "360笔记", "url": "https://360biji.com/" },
-                { "name": "xNote", "url": "http://www.xnote.cn/" },
-                { "name": "印象笔记", "url": "https://www.yinxiang.com/" }
-              ]
-            },
-            {
-              "id": "work_15",
-              "title": "文献阅读",
-              "links": [
-                { "name": "80图书馆", "url": "http://www.80lib.com/" },
-                { "name": "explainpaper", "url": "https://www.explainpaper.com/" },
-                { "name": "elicit", "url": "https://elicit.org/" },
-                { "name": "chatba", "url": "https://www.chatba.com/" },
-                { "name": "chatpdf", "url": "https://www.chatpdf.com/" },
-                { "name": "deepl", "url": "https://www.deepl.com/" }
-              ]
-            },
-            {
-              "id": "work_16",
-              "title": "资源博客",
-              "links": [
-                { "name": "玉米粒", "url": "https://yimili.net/google-seach/" },
-                { "name": "趣乐兔", "url": "https://funletu.com/" },
-                { "name": "优米格", "url": "https://www.4spaces.org/" },
-                { "name": "NTT-AT", "url": "http://www.ntt-at.com/" },
-                { "name": "BRL", "url": "http://www.brl.ntt.co.jp/e/" },
-                { "name": "PHlab", "url": "http://www.phlab.ecl.ntt.co.jp/eng/" },
-                { "name": "SClab", "url": "http://www.ntt.co.jp/sclab/index_e.html" }
-              ]
-            },
-            {
-              "id": "work_17",
-              "title": "谷歌镜像",
-              "links": [
-                { "name": "note.cm", "url": "https://note.cm" },
-                { "name": "qinai", "url": "https://google.qinai.life/" },
-                { "name": "encu", "url": "https://search.ecnu.cf/" },
-                { "name": "ajnu", "url": "https://search.njau.cf/" },
-                { "name": "g88", "url": "https://g88.i-research.edu.eu.org/" },
-                { "name": "iit.xyz", "url": "https://s.iit.xyz" },
-                { "name": "dhobi", "url": "https://dhobi.win/" },
-                { "name": "爱科研", "url": "https://i-research.edu.eu.org/" },
-                { "name": "集合", "url": "https://www.library.ac.cn/" }
-              ]
-            },
-            {
-              "id": "work_18",
-              "title": "谷歌镜像2",
-              "links": [
-                { "name": "flw351e", "url": "https://xn--flw351e.ml/" },
-                { "name": "g13", "url": "https://g13.i-research.edu.eu.org/" },
-                { "name": "ip", "url": "http://47.242.76.183/" },
-                { "name": "浙大", "url": "https://g.luciaz.me/extdomains/www.google.com" }
-              ]
-            },
-            {
-              "id": "work_19",
-              "title": "GitHub",
-              "links": [
-                { "name": "GitHub", "url": "https://github.com/ddduck3000/navi2020/" },
-                { "name": "yzuu", "url": "https://hub.yzuu.cf/" },
-                { "name": "njuu", "url": "https://hub.njuu.cf/" },
-                { "name": "nuaa", "url": "https://hub.nuaa.cf/" },
-                { "name": "kgithub", "url": "https://kgithub.com/" }
-              ]
-            },
-            {
-              "id": "work_20",
-              "title": "免费节点",
-              "links": [
-                { "name": "freefq", "url": "https://github.com/freefq/free" },
-                { "name": "v2cross", "url": "https://github.com/Pawdroid/Free-servers/blob/main/README.md" },
-                { "name": "nuaa", "url": "https://hub.nuaa.cf/" },
-                { "name": "yugogo", "url": "https://proxy.yugogo.xyz/" },
-                { "name": "aibo", "url": "https://github.com/aiboboxx/v2rayfree" },
-                { "name": "v2rayfree", "url": "https://www.v2rayfree.eu.org/post/free-v2ray/" }
-              ]
-            }
+            {"id":"work_1","title":"国基","links":[{"name":"基金委","url":"http://www.nsfc.gov.cn"},{"name":"申报系统","url":"https://grants.nsfc.gov.cn/pmpweb/login"},{"name":"共享服务","url":"http://npd.nsfc.gov.cn/"},{"name":"丁香园","url":"http://nsfc.biomart.cn/"}]},
+            {"id":"work_2","title":"省市","links":[{"name":"省科技厅","url":"http://kjt.shandong.gov.cn/"},{"name":"省基金委","url":"http://www.sdnsf.gov.cn/"},{"name":"省云平台","url":"http://cloud.kjt.shandong.gov.cn/"},{"name":"高校平台","url":"http://221.214.56.13:8089/"},{"name":"市云平台","url":"http://221.214.94.50:81/nsf/young/index.htm"},{"name":"市科技局","url":"http://www.jnsti.gov.cn/"},{"name":"市信息所","url":"http://www.jnsti.net/"},{"name":"市云平台","url":"http://119.164.252.194/a/login"},{"name":"教育厅","url":"http://edu.shandong.gov.cn/"}]},
+            {"id":"work_3","title":"投稿","links":[{"name":"影响因子","url":"http://www.letpub.com.cn/index.php?page=journalapp"},{"name":"CCCG-16","url":"http://www.ccg.ustc.edu.cn/"},{"name":"CRT","url":"http://onlinelibrary.wiley.com/journal/10.1002/(ISSN)1521-4079"},{"name":"CRT山大","url":"http://123.233.119.36/iras51/rewriter/WILEY/http/nmkhmdkhaq-qx9vhkdx9bnl/journal/10.1002/(ISSN)1521-4079"},{"name":"MRI","url":"http://www.editorialmanager.com/mri/"},{"name":"国陶","url":"https://www.sciencedirect.com/journal/ceramics-international"},{"name":"CGD","url":"https://pubs.acs.org/journal/cgdefu"}]},
+            {"id":"work_4","title":"软件","links":[{"name":"小木虫","url":"http://muchong.com/bbs/index.php"},{"name":"labview","url":"http://bbs.elecfans.com/zhuti_labview_1.html"},{"name":"绘图","url":"https://www.draw.io/"},{"name":"WebPlotDigitizer","url":"https://automeris.io/"}]},
+            {"id":"work_5","title":"检索","links":[{"name":"google学术","url":"http://scholar.google.com/"},{"name":"山大校外","url":"http://123.233.119.36/"},{"name":"北工大","url":"http://lib.bjut.edu.cn/shujuku.html "},{"name":"ResearchGate","url":"https://www.researchgate.net"},{"name":"科研动力","url":"https://www.howsci.com/"},{"name":"学术网","url":"http://www.scholarnet.cn/publication/"},{"name":"iask","url":"http://ishare.iask.sina.com.cn/"},{"name":"零点","url":"http://www.soudoc.com/bbs/"},{"name":"博研","url":"http://bbs.myboyan.com/"}]},
+            {"id":"work_6","title":"电书","links":[{"name":"z-library","url":"https://z-library.sk/"},{"name":"z-twitter","url":"https://x.com/z_lib_official"},{"name":"libgen","url":"https://libgen.mx/"},{"name":"libgenesis","url":"https://libgenesis.net/"},{"name":"Anna","url":"https://annas-archive.se/"}]},
+            {"id":"work_7","title":"分区","links":[{"name":"SCI检索","url":"http://123.233.119.36/iras51/rewriter/ISI/"},{"name":"EI检索","url":"http://123.233.119.36/iras51/rewriter/EI/"},{"name":"影响因子","url":"http://www.medsci.cn/sci/?action=search"}]},
+            {"id":"work_8","title":"采购","links":[{"name":"天眼查","url":"http://www.tianyancha.com/"},{"name":"企查查","url":"http://www.qichacha.com/"},{"name":"国药集团","url":"http://www.reagent.com.cn:666/ScrcBackGroup/reagent/newindex.jsp"},{"name":"政采超市","url":"http://portal.sdzfcg.gov.cn/"}]},
+            {"id":"work_9","title":"翻译","links":[{"name":"CNKI","url":"http://dict.cnki.net/dict.aspx"},{"name":"郑州大学","url":"http://www3.zzu.edu.cn/zzjdict/"},{"name":"海词","url":"http://edu.dict.cn/"},{"name":"爱词霸","url":"http://www.iciba.com/"},{"name":"词酷","url":"http://www.nciku.com/"}]},
+            {"id":"work_10","title":"工具","links":[{"name":"WebPlotDigitizer","url":"https://apps.automeris.io/wpd/index.zh_CN.html"},{"name":"draw.io","url":"https://www.draw.io/"},{"name":"海词","url":"http://edu.dict.cn/"},{"name":"爱词霸","url":"http://www.iciba.com/"},{"name":"词酷","url":"http://www.nciku.com/"},{"name":"youtube下载","url":"https://youtubeplaylist.cc/"}]},
+            {"id":"work_11","title":"专利","links":[{"name":"产权局","url":"https://www.cnipa.gov.cn/"},{"name":"专利检索","url":"http://epub.cnipa.gov.cn/"},{"name":"佰腾","url":"http://www.patexplorer.com/"},{"name":"soopat","url":"http://www.soopat.com/"},{"name":"专利下载","url":"http://www.drugfuture.com/cnpat/cn_patent.asp"}]},
+            {"id":"work_12","title":"NTT","links":[{"name":"NTT","url":"https://www.ntt-review.jp/"},{"name":"日经","url":"http://china.nikkeibp.com.cn/"},{"name":"NTT","url":"http://www.ntt.co.jp/index_e.html"},{"name":"NTT-AT","url":"http://www.ntt-at.com/"},{"name":"BRL","url":"http://www.brl.ntt.co.jp/e/"},{"name":"PHlab","url":"http://www.phlab.ecl.ntt.co.jp/eng/"},{"name":"SClab","url":"http://www.ntt.co.jp/sclab/index_e.html"}]},
+            {"id":"work_13","title":"文献","links":[{"name":"scihub","url":"https://www.sci-hub.pub/"},{"name":"libgen","url":"https://librarygenesis.net/zh/"},{"name":"Freepdf","url":"https://www.freefullpdf.com/"},{"name":"Digest","url":"https://www.paperdigest.org/"},{"name":"Saurus","url":"https://www.thesaurus.com/"},{"name":"Connect","url":"https://www.connectedpapers.com/"}]},
+            {"id":"work_14","title":"记事","links":[{"name":"360笔记","url":"https://360biji.com/"},{"name":"xNote","url":"http://www.xnote.cn/"},{"name":"印象笔记","url":"https://www.yinxiang.com/"}]},
+            {"id":"work_15","title":"阅览","links":[{"name":"80图书馆","url":"http://www.80lib.com/"},{"name":"explainpaper","url":"https://www.explainpaper.com/"},{"name":"elicit","url":"https://elicit.org/"},{"name":"chatba","url":"https://www.chatba.com/"},{"name":"chatpdf","url":"https://www.chatpdf.com/"},{"name":"deepl","url":"https://www.deepl.com/"}]},
+            {"id":"work_16","title":"博客","links":[{"name":"玉米粒","url":"https://yimili.net/google-seach/"},{"name":"趣乐兔","url":"https://funletu.com/"},{"name":"优米格","url":"https://www.4spaces.org/"},{"name":"NTT-AT","url":"http://www.ntt-at.com/"},{"name":"BRL","url":"http://www.brl.ntt.co.jp/e/"},{"name":"PHlab","url":"http://www.phlab.ecl.ntt.co.jp/eng/"},{"name":"SClab","url":"http://www.ntt.co.jp/sclab/index_e.html"}]},
+            {"id":"work_17","title":"镜像","links":[{"name":"note.cm","url":"https://note.cm"},{"name":"qinai","url":"https://google.qinai.life/"},{"name":"encu","url":"https://search.ecnu.cf/"},{"name":"ajnu","url":"https://search.njau.cf/"},{"name":"g88","url":"https://g88.i-research.edu.eu.org/"},{"name":"iit.xyz","url":"https://s.iit.xyz"},{"name":"dhobi","url":"https://dhobi.win/"},{"name":"爱科研","url":"https://i-research.edu.eu.org/"},{"name":"集合","url":"https://www.library.ac.cn/"}]},
+            {"id":"work_18","title":"镜像","links":[{"name":"flw351e","url":"https://xn--flw351e.ml/"},{"name":"g13","url":"https://g13.i-research.edu.eu.org/"},{"name":"ip","url":"http://47.242.76.183/"},{"name":"浙大","url":"https://g.luciaz.me/extdomains/www.google.com"}]},
+            {"id":"work_19","title":"Git","links":[{"name":"GitHub","url":"https://github.com/ddduck3000/navi2020/"},{"name":"yzuu","url":"https://hub.yzuu.cf/"},{"name":"njuu","url":"https://hub.njuu.cf/"},{"name":"nuaa","url":"https://hub.nuaa.cf/"},{"name":"kgithub","url":"https://kgithub.com/"}]},
+            {"id":"work_20","title":"节点","links":[{"name":"freefq","url":"https://github.com/freefq/free"},{"name":"v2cross","url":"https://github.com/Pawdroid/Free-servers/blob/main/README.md"},{"name":"nuaa","url":"https://hub.nuaa.cf/"},{"name":"yugogo","url":"https://proxy.yugogo.xyz/"},{"name":"aibo","url":"https://github.com/aiboboxx/v2rayfree"},{"name":"v2rayfree","url":"https://www.v2rayfree.eu.org/post/free-v2ray/"}]}
           ],
-
           digital: [
-            {
-              "id": "digital_1",
-              "title": "打印雕刻",
-              "links": [
-                { "name": "T站", "url": "https://www.thingiverse.com/" },
-                { "name": "MakerWorld", "url": "https://makerworld.com/zh/models/categories" },
-                { "name": "MW中国", "url": "https://makerworld.com.cn/" },
-                { "name": "cults3D", "url": "https://cults3d.com/" },
-                { "name": "youmagine", "url": "https://www.youmagine.com/" },
-                { "name": "pinshape", "url": "https://pinshape.com/" }
-              ]
-            },
-            {
-              "id": "digital_2",
-              "title": "模型网站",
-              "links": [
-                { "name": "拓竹官网", "url": "https://bambulab.cn/zh-cn" },
-                { "name": "拓竹吧", "url": "https://tieba.baidu.com/f?kw=%E6%8B%93%E7%AB%B9&ie=utf-8" },
-                { "name": "3D打印吧", "url": "https://tieba.baidu.com/f?kw=3d%E6%89%93%E5%8D%B0&ie=utf-8" },
-                { "name": "打印啦", "url": "http://www.dayin.la/" },
-                { "name": "迷你工厂", "url": "https://www.myminifactory.com/" },
-                { "name": "P站", "url": "https://www.printables.com/" }
-              ]
-            },
-            {
-              "id": "digital_3",
-              "title": "电视盒子",
-              "links": [
-                { "name": "小米盒子", "url": "http://bbs.xiaomi.cn/forum-593-1.html" },
-                { "name": "hdpfans", "url": "http://www.hdpfans.com" },
-                { "name": "奇珀TV", "url": "http://www.7po.com/forum-kaiboer-1.html" },
-                { "name": "znds", "url": "http://www.znds.com/bbs-137-1.html" },
-                { "name": "veryhd", "url": "http://apk.veryhd.net/" },
-                { "name": "开博尔", "url": "http://www.hd-tv.cn/" },
-                { "name": "乐视盒子", "url": "http://hd.letv.com/" },
-                { "name": "酷开论坛", "url": "http://bbs.coocaa.com/forum.php" },
-                { "name": "酷开吧", "url": "http://tieba.baidu.com/f?kw=%BF%E1%BF%AA&fr=ala0" },
-                { "name": "znds", "url": "http://www.znds.com/bbs-133-1.html" }
-              ]
-            },
-            {
-              "id": "digital_4",
-              "title": "小米资源",
-              "links": [
-                { "name": "小米论坛", "url": "http://bbs.xiaomi.cn/forum.php" },
-                { "name": "影音动漫", "url": "http://bbs.xiaomi.cn/forum-233-1.html" },
-                { "name": "软件区", "url": "http://bbs.xiaomi.cn/forum-230-1.html" },
-                { "name": "游戏区", "url": "http://bbs.xiaomi.cn/forum-231-1.html" },
-                { "name": "小米盒子", "url": "http://bbs.xiaomi.cn/forum-593-1.html" }
-              ]
-            },
-            {
-              "id": "digital_5",
-              "title": "数码电子",
-              "links": [
-                { "name": "iMP3", "url": "http://bbs.imp3.net/forum-272-1.html" },
-                { "name": "xda", "url": "http://forum.xda-developers.com/nook-hd/development" },
-                { "name": "手电", "url": "http://www.shoudian.org/forum-19-1.html" },
-                { "name": "数码之家", "url": "http://bbs.mydigit.cn/" },
-                { "name": "矿石", "url": "http://www.crystalradio.cn/" },
-                { "name": "充电头", "url": "http://www.chongdiantou.com/forum.php" },
-                { "name": "亚视", "url": "http://bbs.asiatvro.com/" }
-              ]
-            },
-            {
-              "id": "digital_6",
-              "title": "综合门户",
-              "links": [
-                { "name": "泡泡网", "url": "http://www.pcpop.com/" },
-                { "name": "中关村", "url": "http://www.zol.com.cn/" },
-                { "name": "太平洋", "url": "http://www.pconline.com.cn/" },
-                { "name": "走进中关村", "url": "http://www.intozgc.com/" }
-              ]
-            },
-            {
-              "id": "digital_7",
-              "title": "驱动门户",
-              "links": [
-                { "name": "驱动之家", "url": "http://www.mydrivers.com/" },
-                { "name": "驱动人生", "url": "http://www.160.com/" }
-              ]
-            },
-            {
-              "id": "digital_8",
-              "title": "软件下载",
-              "links": [
-                { "name": "迅雷", "url": "http://www.xunlei.com/" },
-                { "name": "itellyou", "url": "http://msdn.itellyou.cn/" },
-                { "name": "zdfans", "url": "http://www.zdfans.com/" },
-                { "name": "newxitong", "url": "http://www.newxitong.com/" },
-                { "name": "睿派克", "url": "https://www.repaik.com/forum.php" },
-                { "name": "系统之家", "url": "http://www.xitongzhijia.net/" },
-                { "name": "秋无痕", "url": "http://www.realqwh.cn/" },
-                { "name": "金狐", "url": "http://www.jinhu.me/" },
-                { "name": "无约而来", "url": "http://zxkh19501.blog.163.com/" },
-                { "name": "电脑疯子", "url": "http://www.51gho.net/" }
-              ]
-            },
-            {
-              "id": "digital_9",
-              "title": "网络资讯",
-              "links": [
-                { "name": "cnbeta", "url": "http://www.cnbeta.com/" },
-                { "name": "瘾科技", "url": "http://cn.engadget.com/" },
-                { "name": "pcbeta", "url": "http://bbs.pcbeta.com/" },
-                { "name": "异次元", "url": "http://www.iplaysoft.com/" },
-                { "name": "老树博客", "url": "http://blog.sina.com.cn/chinazzjj" },
-                { "name": "欧普下载", "url": "http://www.ourcrack.com/" },
-                { "name": "小众软件", "url": "http://www.appinn.com" },
-                { "name": "爱范儿", "url": "http://www.ifanr.com/" },
-                { "name": "善用佳软", "url": "http://xbeta.info/" },
-                { "name": "软矿", "url": "http://www.x-berry.com/" }
-              ]
-            },
-            {
-              "id": "digital_10",
-              "title": "主机域名",
-              "links": [
-                { "name": "山东万网", "url": "http://sdww.zuq.cn" },
-                { "name": "西数", "url": "http://www.west263.com/" },
-                { "name": "西数面板", "url": "http://www.myhostadmin.net/default.asp" },
-                { "name": "华夏", "url": "https://www.sudu.cn/" },
-                { "name": "汇网", "url": "http://www.china667.com/" },
-                { "name": "备案", "url": "http://beian.vhostgo.com/" },
-                { "name": "三五", "url": "http://www.dns-diy.com/" },
-                { "name": "快网", "url": "http://www.cnkuai.cn/" },
-                { "name": "godaddy", "url": "http://www.godaddy.com" },
-                { "name": "namesilo", "url": "https://www.namesilo.com" },
-                { "name": "dnspod", "url": "https://www.dnspod.cn/" },
-                { "name": "中狐", "url": "http://www.cnfox.net.cn/" }
-              ]
-            },
-            {
-              "id": "digital_11",
-              "title": "个人网站",
-              "links": [
-                { "name": "山东材料", "url": "http://www.sdclxkq.org/" },
-                { "name": "美天", "url": "http://www.meitianhb.com/" },
-                { "name": "实验室", "url": "http://www.crystcn.com" },
-                { "name": "吉摩", "url": "http://www.godmobi.com" },
-                { "name": "kimos", "url": "http://www.kimos.com.cn" },
-                { "name": "启航", "url": "http://cyclone.w15.my667.com/" },
-                { "name": "GoogleAdsense", "url": "https://www.google.com/adsense/v3/app?hl=zh-CN" }
-              ]
-            },
-            {
-              "id": "digital_12",
-              "title": "设计素材",
-              "links": [
-                { "name": "站酷", "url": "http://www.zcool.com.cn/" },
-                { "name": "懒人", "url": "http://www.lanrentuku.com/vector/background/" },
-                { "name": "千图", "url": "http://www.58pic.com/" },
-                { "name": "我图", "url": "http://www.ooopic.com/" },
-                { "name": "包图", "url": "http://888pic.com/" },
-                { "name": "模板之家", "url": "http://www.cssmoban.com/" },
-                { "name": "设计导航", "url": "http://hao.shejidaren.com/index.html" },
-                { "name": "百姓", "url": "http://jinan.baixing.com/" },
-                { "name": "顺丰", "url": "http://www.sf-express.com/cn/sc/" }
-              ]
-            },
-            {
-              "id": "digital_13",
-              "title": "无线网络",
-              "links": [
-                { "name": "极路由", "url": "http://www.hiwifi.com/" },
-                { "name": "极论坛", "url": "http://bbs.hiwifi.com/forum-93-1.html" },
-                { "name": "如意云", "url": "http://r.xcloud.cc/" },
-                { "name": "小米路由", "url": "www.miwifi.com" },
-                { "name": "磊科", "url": "http://bbs.leikeyun.com/forum.php" },
-                { "name": "newifi", "url": "http://www.newbandeng.com/forum-113-1.html" },
-                { "name": "魔豆", "url": "http://bbs.modouwifi.cn/" },
-                { "name": "anywlan", "url": "http://forum.anywlan.com/" },
-                { "name": "恩山", "url": "http://www.right.com.cn/" },
-                { "name": "test3g", "url": "http://www.test3g.com/" }
-              ]
-            },
-            {
-              "id": "digital_14",
-              "title": "科学上网",
-              "links": [
-                { "name": "youtube", "url": "https://www.youtube.com/" },
-                { "name": "twitter", "url": "https://twitter.com/home" },
-                { "name": "facebook", "url": "https://www.facebook.com/" },
-                { "name": "小米路由", "url": "www.miwifi.com" },
-                { "name": "anywlan", "url": "http://forum.anywlan.com/" },
-                { "name": "ebay", "url": "https://www.ebay.com/usr/91dizhi_1" },
-                { "name": "gcp", "url": "https://cloud.google.com/" }
-              ]
-            },
-            {
-              "id": "digital_15",
-              "title": "BT下载",
-              "links": [
-                { "name": "torrentkitty", "url": "https://sosomagnet.com/" },
-                { "name": "BTdigg", "url": "https://btdig.com/" }
-              ]
-            }
+            {"id":"digital_1","title":"雕刻","links":[{"name":"T站","url":"https://www.thingiverse.com/"},{"name":"MakerWorld","url":"https://makerworld.com/zh/models/categories"},{"name":"MW中国","url":"https://makerworld.com.cn/"},{"name":"cults3D","url":"https://cults3d.com/"},{"name":"youmagine","url":"https://www.youmagine.com/"},{"name":"pinshape","url":"https://pinshape.com/"}]},
+            {"id":"digital_2","title":"模型","links":[{"name":"拓竹官网","url":"https://bambulab.cn/zh-cn"},{"name":"拓竹吧","url":"https://tieba.baidu.com/f?kw=%E6%8B%93%E7%AB%B9&ie=utf-8"},{"name":"3D打印吧","url":"https://tieba.baidu.com/f?kw=3d%E6%89%93%E5%8D%B0&ie=utf-8"},{"name":"打印啦","url":"http://www.dayin.la/"},{"name":"迷你工厂","url":"https://www.myminifactory.com/"},{"name":"P站","url":"https://www.printables.com/"}]},
+            {"id":"digital_3","title":"盒子","links":[{"name":"小米盒子","url":"http://bbs.xiaomi.cn/forum-593-1.html"},{"name":"hdpfans","url":"http://www.hdpfans.com"},{"name":"奇珀TV","url":"http://www.7po.com/forum-kaiboer-1.html"},{"name":"znds","url":"http://www.znds.com/bbs-137-1.html"},{"name":"veryhd","url":"http://apk.veryhd.net/"},{"name":"开博尔","url":"http://www.hd-tv.cn/"},{"name":"乐视盒子","url":"http://hd.letv.com/"},{"name":"酷开论坛","url":"http://bbs.coocaa.com/forum.php"},{"name":"酷开吧","url":"http://tieba.baidu.com/f?kw=%BF%E1%BF%AA&fr=ala0"},{"name":"znds","url":"http://www.znds.com/bbs-133-1.html"}]},
+            {"id":"digital_4","title":"小米","links":[{"name":"小米论坛","url":"http://bbs.xiaomi.cn/forum.php"},{"name":"影音动漫","url":"http://bbs.xiaomi.cn/forum-233-1.html"},{"name":"软件区","url":"http://bbs.xiaomi.cn/forum-230-1.html"},{"name":"游戏区","url":"http://bbs.xiaomi.cn/forum-231-1.html"},{"name":"小米盒子","url":"http://bbs.xiaomi.cn/forum-593-1.html"}]},
+            {"id":"digital_5","title":"数码","links":[{"name":"iMP3","url":"http://bbs.imp3.net/forum-272-1.html"},{"name":"xda","url":"http://forum.xda-developers.com/nook-hd/development"},{"name":"手电","url":"http://www.shoudian.org/forum-19-1.html"},{"name":"数码之家","url":"http://bbs.mydigit.cn/"},{"name":"矿石","url":"http://www.crystalradio.cn/"},{"name":"充电头","url":"http://www.chongdiantou.com/forum.php"},{"name":"亚视","url":"http://bbs.asiatvro.com/"}]},
+            {"id":"digital_6","title":"综合","links":[{"name":"泡泡网","url":"http://www.pcpop.com/"},{"name":"中关村","url":"http://www.zol.com.cn/"},{"name":"太平洋","url":"http://www.pconline.com.cn/"},{"name":"走进中关村","url":"http://www.intozgc.com/"}]},
+            {"id":"digital_7","title":"驱动","links":[{"name":"驱动之家","url":"http://www.mydrivers.com/"},{"name":"驱动人生","url":"http://www.160.com/"}]},
+            {"id":"digital_8","title":"软件","links":[{"name":"迅雷","url":"http://www.xunlei.com/"},{"name":"itellyou","url":"http://msdn.itellyou.cn/"},{"name":"zdfans","url":"http://www.zdfans.com/"},{"name":"newxitong","url":"http://www.newxitong.com/"},{"name":"睿派克","url":"https://www.repaik.com/forum.php"},{"name":"系统之家","url":"http://www.xitongzhijia.net/"},{"name":"秋无痕","url":"http://www.realqwh.cn/"},{"name":"金狐","url":"http://www.jinhu.me/"},{"name":"无约而来","url":"http://zxkh19501.blog.163.com/"},{"name":"电脑疯子","url":"http://www.51gho.net/"}]},
+            {"id":"digital_9","title":"资讯","links":[{"name":"cnbeta","url":"http://www.cnbeta.com/"},{"name":"瘾科技","url":"http://cn.engadget.com/"},{"name":"pcbeta","url":"http://bbs.pcbeta.com/"},{"name":"异次元","url":"http://www.iplaysoft.com/"},{"name":"老树博客","url":"http://blog.sina.com.cn/chinazzjj"},{"name":"欧普下载","url":"http://www.ourcrack.com/"},{"name":"小众软件","url":"http://www.appinn.com"},{"name":"爱范儿","url":"http://www.ifanr.com/"},{"name":"善用佳软","url":"http://xbeta.info/"},{"name":"软矿","url":"http://www.x-berry.com/"}]},
+            {"id":"digital_10","title":"主机","links":[{"name":"山东万网","url":"http://sdww.zuq.cn"},{"name":"西数","url":"http://www.west263.com/"},{"name":"西数面板","url":"http://www.myhostadmin.net/default.asp"},{"name":"华夏","url":"https://www.sudu.cn/"},{"name":"汇网","url":"http://www.china667.com/"},{"name":"备案","url":"http://beian.vhostgo.com/"},{"name":"三五","url":"http://www.dns-diy.com/"},{"name":"快网","url":"http://www.cnkuai.cn/"},{"name":"godaddy","url":"http://www.godaddy.com"},{"name":"namesilo","url":"https://www.namesilo.com"},{"name":"dnspod","url":"https://www.dnspod.cn/"},{"name":"中狐","url":"http://www.cnfox.net.cn/"}]},
+            {"id":"digital_11","title":"个人","links":[{"name":"山东材料","url":"http://www.sdclxkq.org/"},{"name":"美天","url":"http://www.meitianhb.com/"},{"name":"实验室","url":"http://www.crystcn.com"},{"name":"吉摩","url":"http://www.godmobi.com"},{"name":"kimos","url":"http://www.kimos.com.cn"},{"name":"启航","url":"http://cyclone.w15.my667.com/"},{"name":"GoogleAdsense","url":"https://www.google.com/adsense/v3/app?hl=zh-CN"}]},
+            {"id":"digital_12","title":"设计","links":[{"name":"站酷","url":"http://www.zcool.com.cn/"},{"name":"懒人","url":"http://www.lanrentuku.com/vector/background/"},{"name":"千图","url":"http://www.58pic.com/"},{"name":"我图","url":"http://www.ooopic.com/"},{"name":"包图","url":"http://888pic.com/"},{"name":"模板之家","url":"http://www.cssmoban.com/"},{"name":"设计导航","url":"http://hao.shejidaren.com/index.html"},{"name":"百姓","url":"http://jinan.baixing.com/"},{"name":"顺丰","url":"http://www.sf-express.com/cn/sc/"}]},
+            {"id":"digital_13","title":"无线","links":[{"name":"极路由","url":"http://www.hiwifi.com/"},{"name":"极论坛","url":"http://bbs.hiwifi.com/forum-93-1.html"},{"name":"如意云","url":"http://r.xcloud.cc/"},{"name":"小米路由","url":"www.miwifi.com"},{"name":"磊科","url":"http://bbs.leikeyun.com/forum.php"},{"name":"newifi","url":"http://www.newbandeng.com/forum-113-1.html"},{"name":"魔豆","url":"http://bbs.modouwifi.cn/"},{"name":"anywlan","url":"http://forum.anywlan.com/"},{"name":"恩山","url":"http://www.right.com.cn/"},{"name":"test3g","url":"http://www.test3g.com/"}]},
+            {"id":"digital_14","title":"上网","links":[{"name":"youtube","url":"https://www.youtube.com/"},{"name":"twitter","url":"https://twitter.com/home"},{"name":"facebook","url":"https://www.facebook.com/"},{"name":"小米路由","url":"www.miwifi.com"},{"name":"anywlan","url":"http://forum.anywlan.com/"},{"name":"ebay","url":"https://www.ebay.com/usr/91dizhi_1"},{"name":"gcp","url":"https://cloud.google.com/"}]},
+            {"id":"digital_15","title":"BT","links":[{"name":"torrentkitty","url":"https://sosomagnet.com/"},{"name":"BTdigg","url":"https://btdig.com/"}]}
           ]
         }
       }
     },
-
     computed: {
       currentEngine() {
         return this.engines[this.engineIndex];
       },
       currentSections() {
-        const base = this.sectionsByTab[this.activeTab] || [];
-        const customList = this.customLinks[this.activeTab] || [];
-        if (!customList.length) return base;
-        const customSection = {
-          id: this.activeTab + '_custom',
-          title: '自定',
-          links: customList
-        };
-        return [...base, customSection];
+        return this.sectionsByTab[this.activeTab] || [];
       },
-      customLinksForTab() {
-        return this.customLinks[this.activeTab] || [];
-      },
-      // 拆成 2×2 的四块（2 列 × 2 行的大块）
       columns() {
         const cols = [[], [], [], []];
         this.currentSections.forEach((sec, idx) => {
@@ -1256,10 +587,6 @@ sectionsByTab: {
       },
       cycleEngine() {
         this.engineIndex = (this.engineIndex + 1) % this.engines.length;
-      },
-      filteredLinks(links) {
-        // 不再根据关键字过滤本地链接，只原样返回
-        return links;
       },
       onSearchSubmit() {
         const kw = this.keyword.trim();
@@ -1279,16 +606,21 @@ sectionsByTab: {
             return;
           }
           const map = { common: [], work: [], digital: [] };
+          const all = [];
           (data || []).forEach(row => {
             const tab = row.tab || 'common';
             if (!map[tab]) map[tab] = [];
-            map[tab].push({
+            const linkObj = {
               id: row.id,
               name: row.name,
-              url: row.url
-            });
+              url: row.url,
+              tab
+            };
+            map[tab].push(linkObj);
+            all.push(linkObj);
           });
           this.customLinks = map;
+          this.allCustomLinks = all;
         } catch (e) {
           console.error('加载云端收藏异常', e);
         }
@@ -1310,34 +642,18 @@ sectionsByTab: {
             alert('新增收藏失败，请稍后重试');
             return;
           }
-          if (!this.customLinks[tab]) this.customLinks[tab] = [];
-          this.customLinks[tab].push({
+          const linkObj = {
             id: data.id,
             name: data.name,
-            url: data.url
-          });
+            url: data.url,
+            tab: data.tab || tab
+          };
+          if (!this.customLinks[tab]) this.customLinks[tab] = [];
+          this.customLinks[tab].push(linkObj);
+          this.allCustomLinks.push(linkObj);
         } catch (e) {
           console.error('新增收藏异常', e);
           alert('新增收藏异常，请稍后重试');
-        }
-      },
-      async removeCustomLink(tab, id) {
-        if (!confirm('确定要删除这个收藏吗？')) return;
-        try {
-          const { error } = await sb
-            .from('bookmarks')
-            .delete()
-            .eq('id', id);
-          if (error) {
-            console.error('删除收藏失败', error);
-            alert('删除失败，请稍后重试');
-            return;
-          }
-          if (!this.customLinks[tab]) return;
-          this.customLinks[tab] = this.customLinks[tab].filter(l => l.id !== id);
-        } catch (e) {
-          console.error('删除收藏异常', e);
-          alert('删除异常，请稍后重试');
         }
       }
     },
